@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+iview cli
+"""
+
+import click
+from click_support import PATH
+import iview
+
+
+@click.command()
+@click.option("--size",
+    type=click.IntRange(min=8),
+    default=640,
+    help="width or maximum height of displayed image",
+)
+@click.argument("paths", type=PATH, nargs=-1)
+def main(paths, size):
+    """
+    iview - a digital photo viewer
+
+    iview displays the image specified by PATHS.
+    PATHS is a list of image paths or a directory containing images
+
+    iview allows you to step forward or backward though all the images
+    and/or image directories specified in the arguments.
+
+    \b
+    Hit
+      <SPACE>     to go to the next image.
+      <BACKSPACE> to go to the previous image.
+      <ESCAPE>    to exit.
+    """
+
+    if not paths:
+        context = click.get_current_context()
+        click.echo(context.get_help())
+    else:
+        iview.main(paths, size=size)
+
+
+if __name__ == "__main__":
+    main()

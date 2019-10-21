@@ -9,7 +9,7 @@ __pycache__
 .classpath
 local
 out/
-venv
+.venv
 *.out
 *.mp4
 *.mov

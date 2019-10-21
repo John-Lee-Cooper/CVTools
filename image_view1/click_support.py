@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 Provide Additional Click Types
-Including
+
+Including:
   PATH - same as click.types.Path but returns a Path instead of a string
   FILEPATH - same as PATH but must be an existing file
   DIRPATH - same as PATH but must be an existing directory
@@ -14,31 +14,8 @@ from pathlib import Path
 import click
 
 
-"""
-TODO:
-  Color     (r,g,b, #RRGGBB or green)
-  ImagePath *.[jpg|png|...]
-  Image     *.[jpg|png|...]
-
-
-class BasedIntParamType(click.ParamType):
-    name = 'integer'
-
-    def convert(self, value, param, ctx):
-        try:
-            if value[:2].lower() == '0x':
-                return int(value[2:], 16)
-            if value[:1] == '0':
-                return int(value, 8)
-            return int(value, 10)
-        except ValueError:
-            self.fail('%s is not a valid integer' % value, param, ctx)
-
-INT = BasedIntParamType()
-"""
-
-
 class PathParamType(click.types.Path):
+    """ Click type extension that takes a path string and returns a Path """
     name = "Path"
 
     def __init__(self, exists=True, **kw):
@@ -46,18 +23,19 @@ class PathParamType(click.types.Path):
 
     def convert(self, value, param, ctx):
         try:
-            value = super().convert(value, param, ctx)
-            return Path(value)
+            return Path(super().convert(value, param, ctx))
         except ValueError:
             self.fail("%s is not a valid path" % value, param, ctx)
 
 
 class FilePathParamType(PathParamType):
+    """ Click type extension that takes a path to an existing file and returns a Path """
     def __init__(self, exists=True, dir_okay=False, **kw):
         super().__init__(exists=exists, dir_okay=dir_okay, **kw)
 
 
 class DirectoryPathParamType(PathParamType):
+    """ Click type extension that takes a path to an existing directory and returns a Path """
     def __init__(self, exists=True, file_okay=False, **kw):
         super().__init__(exists=exists, file_okay=file_okay, **kw)
 
