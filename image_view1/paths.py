@@ -1,18 +1,19 @@
 from sys import argv
 from pathlib import Path
 import config
+from type_ext import FilePath, Optional, List, Iterator, PosixPath
 
 """
 Functions to support image and video paths
 """
 
 
-def script_name():
+def script_name() -> str:
     """ Return final path component of script without .py extension """
     return Path(argv[0]).stem
 
 
-def trash(path):
+def trash(path: FilePath) -> None:
     """
     Move path to trash directory (safe delete)
     If path already exists there, try adding a number (1) to the end of the name
@@ -30,7 +31,9 @@ def trash(path):
     src_path.replace(dst_path)
 
 
-def file_paths(directory_path, pattern="*", valid_exts=None):
+def file_paths(
+    directory_path: FilePath, pattern: str = "*", valid_exts: Optional[List[str]] = None
+) -> Iterator[PosixPath]:
     """
     Yield the next path in directory_path that matches the pattern and
     if specified, has a suffic contained in valid_exts

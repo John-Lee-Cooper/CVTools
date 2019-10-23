@@ -1,4 +1,4 @@
-from typing import Sequence, Any
+from typing import Sequence, Any, Iterator, Union
 
 
 class RingBuffer:
@@ -14,7 +14,7 @@ class RingBuffer:
     'c'
     """
 
-    def __init__(self, list_: Sequence, value: Any = None):
+    def __init__(self, list_: Union[Sequence, Iterator], value: Any = None):
         self.forward = True
         self.list = list(list_)
         self.length = len(self.list)

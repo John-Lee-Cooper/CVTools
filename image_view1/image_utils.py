@@ -1,15 +1,16 @@
 import cv2 as cv
+from type_ext import Image, Optional
 
 
 def resize(
-    image,
-    height=None,
-    width=None,
-    max_size=None,
-    max_height=None,
-    max_width=None,
-    interpolation=cv.INTER_AREA,
-):
+    image: Image,
+    height: Optional[int] = None,
+    width: Optional[int] = None,
+    max_size: Optional[int] = None,
+    max_height: Optional[int] = None,
+    max_width: Optional[int] = None,
+    interpolation: int = cv.INTER_AREA,
+) -> Image:
     """
     Return image scaled using interpolation.
     The new size can be specified using height or width.
@@ -18,7 +19,9 @@ def resize(
     """
 
     assert height is None or width is None
-    assert (max_size is not None) + (max_height is not None) + (max_width is not None) <= 1
+    assert (max_size is not None) + (max_height is not None) + (
+        max_width is not None
+    ) <= 1
 
     h, w = image.shape[:2]
     if height is not None:

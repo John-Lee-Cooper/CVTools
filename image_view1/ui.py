@@ -11,7 +11,7 @@ except ModuleNotFoundError:
     print("import click failed")
 
 
-def error(message, exit_code=1):
+def error(message: str, exit_code: int = 1) -> None:
     """ Notify user of a fatal error and exit with error_code """
     if click_installed:
         secho(message, **config.error_style)
@@ -20,7 +20,7 @@ def error(message, exit_code=1):
     exit(exit_code)
 
 
-def warning(message):
+def warning(message: str) -> None:
     """ Notify user something has gone wrong """
     if click_installed:
         secho(message, **config.warning_style)
@@ -28,7 +28,7 @@ def warning(message):
         print(message)
 
 
-def info(message):
+def info(message: str) -> None:
     """ Notify user message"""
     if click_installed:
         secho(message, **config.info_style)

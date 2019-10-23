@@ -9,19 +9,21 @@ Including:
   DIRPATH - same as PATH but must be an existing directory
 """
 
-
-from pathlib import Path
+from pathlib import Path, PosixPath
 import click
 
 
 class PathParamType(click.types.Path):
     """ Click type extension that takes a path string and returns a Path """
+
     name = "Path"
 
-    def __init__(self, exists=True, **kw):
+    def __init__(self, exists: bool = True, **kw):
         super().__init__(exists=exists, **kw)
 
-    def convert(self, value, param, ctx):
+    def convert(
+        self, value: str, param: click.ParamType, ctx: click.Context
+    ) -> PosixPath:
         try:
             return Path(super().convert(value, param, ctx))
         except ValueError:
@@ -30,13 +32,15 @@ class PathParamType(click.types.Path):
 
 class FilePathParamType(PathParamType):
     """ Click type extension that takes a path to an existing file and returns a Path """
-    def __init__(self, exists=True, dir_okay=False, **kw):
+
+    def __init__(self, exists: bool = True, dir_okay: bool = False, **kw):
         super().__init__(exists=exists, dir_okay=dir_okay, **kw)
 
 
 class DirectoryPathParamType(PathParamType):
     """ Click type extension that takes a path to an existing directory and returns a Path """
-    def __init__(self, exists=True, file_okay=False, **kw):
+
+    def __init__(self, exists: bool = True, file_okay: bool = False, **kw):
         super().__init__(exists=exists, file_okay=file_okay, **kw)
 
 

@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
 """ Display all images in paths """
+from pathlib import PosixPath
 
 from window import Window, SPACE, BACKSPACE, DELETE_KEY
 from paths import trash
 from image_paths import imread, paths_to_image_ring
 from image_utils import resize
+from type_ext import List, FilePath
 import config
 
 
-def process(window, image_path, size):
+def process(window: Window, image_path: PosixPath, size: int) -> int:
     image = imread(image_path)
 
     image = resize(image, width=size, max_size=size)
@@ -18,7 +20,7 @@ def process(window, image_path, size):
     return key
 
 
-def main(paths, size: int = 640) -> None:
+def main(paths: List[FilePath], size: int = 640) -> None:
     """
     Main routine
       Create window

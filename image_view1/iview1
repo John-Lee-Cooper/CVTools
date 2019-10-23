@@ -11,7 +11,8 @@ import iview
 
 
 @click.command()
-@click.option("--size",
+@click.option(
+    "--size",
     type=click.IntRange(min=8),
     default=640,
     help="width or maximum height of displayed image",

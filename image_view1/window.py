@@ -2,8 +2,10 @@
 
 from sys import platform
 from pathlib import Path, PosixPath
+
 import cv2 as cv
 from paths import script_name
+from type_ext import FilePath, Image, Optional
 import ui
 
 ESC_KEY = 27
@@ -55,17 +57,19 @@ class Window:
         self.destroy()
 
     @staticmethod
-    def make_name(name):
+    def make_name(name: FilePath) -> Optional[PosixPath]:
         """ If name is a PosixPath, return its name, else assume its a string and return it """
         return Path(name).name if type(name) is PosixPath else name
 
-    def set_title(self, title, include_script_name=True):
+    def set_title(self, title: FilePath, include_script_name: bool = True) -> None:
         title = self.make_name(title)
         if include_script_name:
             title = f"{script_name()} {title}"
         cv.setWindowTitle(self.name, title)
 
-    def display(self, image, wait_ms=None, title=None):
+    def display(
+        self, image: Image, wait_ms: int = None, title: Optional[FilePath] = None
+    ) -> int:
         """
         Display image in window
 
@@ -82,7 +86,8 @@ class Window:
 
         return self.wait(wait_ms)
 
-    def wait(self, wait_ms=0):
+    @staticmethod
+    def wait(wait_ms: int = 0) -> int:
         # TODO: Pass in keyhandler
 
         key_code = cv.waitKey(int(wait_ms))
@@ -94,9 +99,5 @@ class Window:
 
         return key_code
 
-    def toggle_fullscreen(self):
-        value = cv.getWindowProperty(self.name, cv.WND_PROP_FULLSCREEN)
-        cv.setWindowProperty(self.name, cv.WND_PROP_FULLSCREEN, not value)
-
-    def move(self, x, y):
+    def move(self, x: int, y: int) -> None:
         cv.moveWindow(self.name, x, y)
