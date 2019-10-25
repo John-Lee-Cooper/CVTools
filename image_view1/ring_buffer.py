@@ -1,64 +1,87 @@
+"""
+TODO
+"""
+
 from typing import Sequence, Any, Iterator, Union
 
 
 class RingBuffer:
-    """ 
-    >>> abc = RingBuffer("abc", "b")
-    >>> abc.list, abc.value()
-    ('abc', 'b')
-    >>> abc.next()
+    """
+    Generic circular buffer.
+
+    >>> ring = RingBuffer("abc", "b")
+    >>> ring.forward()
+    >>> str(ring)
+    "RingBuffer(['a', 'b', 'c'], 'b')"
+    >>> next(ring)
     'c'
-    >>> abc.next()
+    >>> next(ring)
     'a'
-    >>> abc.prev()
+    >>> ring.backward()
+    >>> next(ring)
     'c'
     """
 
     def __init__(self, list_: Union[Sequence, Iterator], value: Any = None):
-        self.forward = True
-        self.list = list(list_)
-        self.length = len(self.list)
-        self.index = 0 if value is None else self.list.index(value)
+        self._step = 0
+        self._list = list(list_)
+        self._index = 0 if value is None else self._list.index(value)
 
     def __repr__(self):
-        return f"RingBuffer({self.list}, {self.value()})"
+        return f"RingBuffer({self._list}, {repr(self.value())})"
 
     def __len__(self):
-        return self.length
+        return len(self._list)
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        return self.value()
+        if not self._list:
+            raise StopIteration
+
+        self._index += self._step
+        if self._index < 0:
+            self._index = len(self._list) - 1
+        elif self._index >= len(self._list):
+            self._index = 0
+        return self._list[self._index]
 
     def value(self) -> Any:
-        """ Return the current item in the list """
-        if self.length == 0:
+        """
+        Return the current item in the list
+
+        >>> ring = RingBuffer("abc", "b")
+        >>> ring.value()
+        'b'
+        """
+        if not self._list:
             raise StopIteration
-        return self.list[self.index]
+        return self._list[self._index]
 
-    def next(self) -> Any:
-        """ Advance to the next item in the list and return it """
-        self.forward = True
-        self.index += 1
-        if self.index >= self.length:
-            self.index = 0
-        return self.value()
+    def forward(self) -> None:
+        self._step = 1
 
-    def prev(self) -> Any:
-        """ Advance to the previous item in the list and return it """
-        self.forward = False
-        self.index -= 1
-        if self.index < 0:
-            self.index = self.length - 1
-        return self.value()
+    def backward(self) -> None:
+        self._step = -1
 
     def pop(self) -> Any:
-        del self.list[self.index]
-        if self.forward:
-            if self.index >= self.length:
-                self.index = 0
-            return self.value()
-        else:
-            return self.prev()
+        """
+        Remove the current item in the list and return it.
+
+        >>> ring = RingBuffer("abcd", "c")
+        >>> ring.pop()
+        'c'
+        >>> str(ring)
+        "RingBuffer(['a', 'b', 'd'], 'b')"
+        >>> ring.backward()
+        >>> ring.pop()
+        'b'
+        >>> str(ring)
+        "RingBuffer(['a', 'd'], 'd')"
+        """
+        result = self._list[self._index]
+        del self._list[self._index]
+        if self._step >= 0:
+            self._index -= 1
+        return result

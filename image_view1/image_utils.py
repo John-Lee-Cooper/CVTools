@@ -1,3 +1,9 @@
+"""
+Functions to support manipulating numpy/open_cv images
+
+TODO: Add doctests and/or demo
+"""
+
 import cv2 as cv
 from type_ext import Image, Optional
 

@@ -1,11 +1,13 @@
-""" Configure the tool """
+"""
+Configure the tool
+"""
 
 from pathlib import Path
 
 
 # Paths
-data_path = Path("/Users/johncooper/python/open_cv/data/")
-trash_path = Path("/Users/johncooper/python/open_cv/data/trash/")
+data_path = Path("~/python/open_cv/data/").expanduser()
+trash_path = Path("~/python/open_cv/data/trash/").expanduser()
 
 # UI click styles
 error_style = dict(fg="red", bold=True)

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-""" Display all images in paths """
+"""
+Display all images in paths
+"""
 from pathlib import PosixPath
-
 from window import Window, SPACE, BACKSPACE, DELETE_KEY
 from paths import trash
 from image_paths import imread, paths_to_image_ring
@@ -38,12 +39,12 @@ def main(paths: List[FilePath], size: int = 640) -> None:
             key = process(window, image_path, size)
 
             if key == SPACE:
-                image_ring.next()
+                image_ring.forward()
 
             elif key == BACKSPACE:
-                image_ring.prev()
+                image_ring.backward()
 
-            elif key == DELETE_KEY:
+            elif key in (DELETE_KEY, ord("d")):
                 trash(image_path)
                 image_ring.pop()
 

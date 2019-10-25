@@ -4,7 +4,7 @@ import config
 from type_ext import FilePath, Optional, List, Iterator, PosixPath
 
 """
-Functions to support image and video paths
+Extensions to pathlib
 """
 
 

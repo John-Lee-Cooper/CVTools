@@ -1,4 +1,4 @@
 numpy
 Click
-opencv-python
-opencv-contrib-python
+opencv - python
+opencv - contrib - python
