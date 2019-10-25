@@ -1,9 +1,8 @@
 """
 Functions to support manipulating numpy/open_cv images
-
-TODO: Add doctests and/or demo
 """
 
+import numpy as np
 import cv2 as cv
 from type_ext import Image, Optional
 
@@ -22,6 +21,16 @@ def resize(
     The new size can be specified using height or width.
     The size can be further specified using max_width, max_height or max_size.
     The result will always have the same aspect ratio.
+
+    >>> image = np.zeros([50, 100], dtype=np.uint8)
+    >>> image.shape
+    (50, 100)
+    >>> resize(image, height=100).shape
+    (100, 200)
+    >>> resize(image, max_size=80).shape
+    (40, 80)
+    >>> resize(image, max_height=30).shape
+    (30, 60)
     """
 
     assert height is None or width is None

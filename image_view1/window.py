@@ -88,11 +88,9 @@ class Window:
 
     @staticmethod
     def wait(wait_ms: int = 0) -> int:
-        # TODO: Pass in keyhandler
 
         key_code = cv.waitKey(int(wait_ms))
-        # key_code = cv.waitKeyEx(int(wait_ms))
-        # if key_code != -1: info(key_code)
+        # = cv.waitKeyEx(int(wait_ms))
 
         if key_code & 0xFF == ESC_KEY:
             exit(0)
