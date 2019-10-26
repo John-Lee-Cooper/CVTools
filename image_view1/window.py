@@ -1,28 +1,10 @@
 #!/usr/bin/env python
 
-from sys import platform
 from pathlib import Path, PosixPath
-
 import cv2 as cv
 from paths import script_name
 from type_ext import FilePath, Image, Optional
-import ui
-
-ESC_KEY = 27
-SPACE = 32
-BACKSPACE = 8
-DELETE_KEY = -1
-
-if platform in ("linux", "linux2"):
-    DELETE_KEY = 255
-
-elif platform == "darwin":  # OS X
-    DELETE_KEY = 117
-
-# elif platform == "win32":  # Windows...
-
-else:
-    ui.warning(f"Window does not fully support {platform}")
+from keys import ESC_KEY
 
 
 class Window:

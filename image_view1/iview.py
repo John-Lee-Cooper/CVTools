@@ -4,7 +4,7 @@
 Display all images in paths
 """
 from pathlib import PosixPath
-from window import Window, SPACE, BACKSPACE, DELETE_KEY
+from window import Window
 from paths import trash
 from image_paths import imread, paths_to_image_ring
 from image_utils import resize
@@ -38,15 +38,14 @@ def main(paths: List[FilePath], size: int = 640) -> None:
 
             key = process(window, image_path, size)
 
-            if key == SPACE:
+            if key == config.next_key:
                 image_ring.forward()
 
-            elif key == BACKSPACE:
+            elif key == config.prev_key:
                 image_ring.backward()
 
-            elif key in (DELETE_KEY, ord("d")):
-                trash(image_path)
-                image_ring.pop()
+            elif key in config.delete_keys:
+                trash(image_ring.pop())
 
             else:
                 print(key)

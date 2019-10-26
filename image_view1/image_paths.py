@@ -18,7 +18,7 @@ IMAGE_EXTS = ".bmp .dib .jpeg .jpg .jpe .jp2 .webp .png .pbm .pgm .ppm .pxm .pnm
 )
 
 
-def imread(filename: FilePath, flags: int = cv.IMREAD_COLOR) -> Image:
+def imread(file_name: FilePath, flags: int = cv.IMREAD_COLOR) -> Image:
     """
     Load an image from the specified file and returns it.
     Filename may be a Path.
@@ -30,28 +30,31 @@ def imread(filename: FilePath, flags: int = cv.IMREAD_COLOR) -> Image:
       IMREAD_ANYCOLOR = Loads image in any possible format
       IMREAD_ANYDEPTH = Loads image in 16-bit/32-bit else converts it to 8-bit
     """
-    image = cv.imread(str(filename), flags)  # str in case filename is a Path
+    image = cv.imread(str(file_name), flags)  # str in case file_name is a Path
 
     if image is None:
-        ui.error(f"Failed to load image file: {filename}")
+        ui.error(f"Failed to load image file: {file_name}")
 
     return image
 
 
 def imwrite(
-    filename: FilePath, image: np.ndarray, dir_path: Optional[FilePath] = None
+    file_name: FilePath,
+    image: np.ndarray,
+    dir_path: Optional[FilePath] = None,
+    params: Optional[int] = None
 ) -> None:
     """
-    Save image to filename
+    Save image to file_name
     Filename may be a Path.
     If dir_path is provided, save image in that directory
     """
     if dir_path:
-        filename = Path(dir_path).parent / Path(filename).name
-    cv.imwrite(str(filename), image)
+        file_name = Path(dir_path).parent / Path(file_name).name
+    cv.imwrite(str(file_name), image, params)
 
 
-def paths_to_image_ring(paths: List[FilePath]) -> RingBuffer:
+def paths_to_image_ring(paths: List[FilePath], subdirectories: bool = True) -> RingBuffer:
     """ Return a RingBuffer of image Paths given a list of file and/or directory Paths """
 
     if len(paths) == 0:
@@ -59,7 +62,7 @@ def paths_to_image_ring(paths: List[FilePath]) -> RingBuffer:
         return RingBuffer([])
 
     if len(paths) == 1:
-        return path_to_image_ring(paths[0])
+        return path_to_image_ring(paths[0], subdirectories)
 
     image_paths_ = []
     for index, path in enumerate(paths):
@@ -99,8 +102,8 @@ def is_image_path(path: PosixPath) -> bool:
     return path.is_file() and path.suffix.lower() in IMAGE_EXTS
 
 
-def image_paths(directory_path: str = ".", pattern: str = "*") -> Iterator[PosixPath]:
+def image_paths(directory_path: str = ".", pattern: str = "*") -> List[PosixPath]:
     """
-    Yield the next path to an image in directory_path that matches the pattern.
+    Return the paths to the images in directory_path that matches the pattern.
     """
     return file_paths(directory_path, pattern=pattern, valid_exts=IMAGE_EXTS)

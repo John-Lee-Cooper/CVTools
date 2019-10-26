@@ -32,8 +32,10 @@ def trash(path: FilePath) -> None:
 
 
 def file_paths(
-    directory_path: FilePath, pattern: str = "*", valid_exts: Optional[List[str]] = None
-) -> Iterator[PosixPath]:
+    directory_path: FilePath,
+    pattern: str = "*",
+    valid_exts: Optional[List[str]] = None
+) -> List[PosixPath]:
     """
     Yield the next path in directory_path that matches the pattern and
     if specified, has a suffic contained in valid_exts
@@ -41,8 +43,11 @@ def file_paths(
     directory_path = Path(directory_path)
     assert directory_path.is_dir()
 
-    for path in sorted(directory_path.glob(pattern)):
+    # if filename does not end in valid_ext, ignore it
+    result = [path
+              for path in directory_path.glob(pattern)
+              if valid_exts is None or path.suffix.lower() in valid_exts
+    ]
 
-        # if filename does not end in valid_ext, ignore it
-        if valid_exts is None or path.suffix.lower() in valid_exts:
-            yield path
+    result.sort()
+    return result
