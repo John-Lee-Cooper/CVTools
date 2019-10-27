@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+"""
+Provide key constants for each platform
+"""
+
 from sys import platform
 import ui
 

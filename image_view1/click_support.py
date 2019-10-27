@@ -53,11 +53,12 @@ DIRPATH = DirectoryPathParamType()
 @click.option("--filepath", type=FILEPATH)
 @click.option("--dirpath", type=DIRPATH, default=".")
 @click.argument("path", type=PATH, nargs=-1)
-def main(filepath, dirpath, path):
+def demo(filepath, dirpath, path):
+    """ Demonstrate PATH, FILEPATH, and DIRPATH """
     click.echo(f"filepath: {filepath}")
     click.echo(f"dirpath: {dirpath}")
     click.echo(f"path: {path}")
 
 
 if __name__ == "__main__":
-    main()
+    demo()

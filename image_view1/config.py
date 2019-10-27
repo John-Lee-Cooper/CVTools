@@ -6,15 +6,15 @@ from pathlib import Path
 import keys
 
 # Paths
-data_path = Path("~/python/open_cv/data/").expanduser()
-trash_path = Path("~/python/open_cv/data/trash/").expanduser()
+DATA_PATH = Path("~/python/open_cv/data/").expanduser()
+TRASH_PATH = Path("~/python/open_cv/data/trash/").expanduser()
 
 # UI click styles
-error_style = dict(fg="red", bold=True)
-warning_style = dict(fg="yellow", bold=True)
-info_style = dict(fg="green", bold=False)
+ERROR_STYLE = dict(fg="red", bold=True)
+WARNING_STYLE = dict(fg="yellow", bold=True)
+INFO_STYLE = dict(fg="green", bold=False)
 
 # Keys
-next_key = keys.SPACE
-prev_key = keys.BACKSPACE
-delete_keys = (keys.DELETE_KEY, ord("d"))
+NEXT_KEY = keys.SPACE
+PREV_KEY = keys.BACKSPACE
+DELETE_KEYS = (keys.DELETE_KEY, ord("d"))

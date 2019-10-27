@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+"""
+Window class
+"""
+import sys
 from pathlib import Path, PosixPath
 import cv2 as cv
 from paths import script_name
@@ -8,10 +12,11 @@ from keys import ESC_KEY
 
 
 class Window:
+    """ Class wrapper for open_cv window functions """
+
     def __init__(
         self, name="", flag=cv.WINDOW_GUI_NORMAL, image=None, include_script_name=True
     ):
-
         name = self.make_name(name)
         if not name or include_script_name:
             name = f"{script_name()} {name}"
@@ -30,6 +35,7 @@ class Window:
             self.display(image)
 
     def destroy(self):
+        """ Remove the window """
         cv.destroyWindow(self.name)
 
     def __enter__(self):
@@ -41,9 +47,10 @@ class Window:
     @staticmethod
     def make_name(name: FilePath) -> Optional[PosixPath]:
         """ If name is a PosixPath, return its name, else assume its a string and return it """
-        return Path(name).name if type(name) is PosixPath else name
+        return Path(name).name if isinstance(name, PosixPath) else name
 
     def set_title(self, title: FilePath, include_script_name: bool = True) -> None:
+        """ Set the title of the window """
         title = self.make_name(title)
         if include_script_name:
             title = f"{script_name()} {title}"
@@ -70,14 +77,16 @@ class Window:
 
     @staticmethod
     def wait(wait_ms: int = 0) -> int:
+        """ Wait for a keystroke or until wait_ms milliseconds pass """
 
         key_code = cv.waitKey(int(wait_ms))
         # = cv.waitKeyEx(int(wait_ms))
 
         if key_code & 0xFF == ESC_KEY:
-            exit(0)
+            sys.exit(0)
 
         return key_code
 
     def move(self, x: int, y: int) -> None:
+        """ Move the window to x, y """
         cv.moveWindow(self.name, x, y)

@@ -1,11 +1,11 @@
-from sys import argv
-from pathlib import Path
-import config
-from type_ext import FilePath, Optional, List, Iterator, PosixPath
-
 """
 Extensions to pathlib
 """
+
+from sys import argv
+from pathlib import Path
+import config
+from type_ext import FilePath, Optional, List, PosixPath
 
 
 def script_name() -> str:
@@ -20,7 +20,7 @@ def trash(path: FilePath) -> None:
     and increment it until a unique path is found.
     """
     src_path = Path(path)
-    dst_path = config.trash_path / src_path.name
+    dst_path = config.TRASH_PATH / src_path.name
 
     # Ensure we are not overwriting anything in trash
     count = 1
@@ -32,9 +32,7 @@ def trash(path: FilePath) -> None:
 
 
 def file_paths(
-    directory_path: FilePath,
-    pattern: str = "*",
-    valid_exts: Optional[List[str]] = None
+    directory_path: FilePath, pattern: str = "*", valid_exts: Optional[List[str]] = None
 ) -> List[PosixPath]:
     """
     Yield the next path in directory_path that matches the pattern and
@@ -44,9 +42,10 @@ def file_paths(
     assert directory_path.is_dir()
 
     # if filename does not end in valid_ext, ignore it
-    result = [path
-              for path in directory_path.glob(pattern)
-              if valid_exts is None or path.suffix.lower() in valid_exts
+    result = [
+        path
+        for path in directory_path.glob(pattern)
+        if valid_exts is None or path.suffix.lower() in valid_exts
     ]
 
     result.sort()

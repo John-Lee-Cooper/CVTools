@@ -40,11 +40,7 @@ class RingBuffer:
         if not self._list:
             raise StopIteration
 
-        self._index += self._step
-        if self._index < 0:
-            self._index = len(self._list) - 1
-        elif self._index >= len(self._list):
-            self._index = 0
+        self._index = (self._index + self._step) % len(self._list)
         return self._list[self._index]
 
     def value(self) -> Any:
@@ -60,9 +56,11 @@ class RingBuffer:
         return self._list[self._index]
 
     def forward(self) -> None:
+        """ Cause ringbuffer next call to __next__ to advance forward """
         self._step = 1
 
     def backward(self) -> None:
+        """ Cause ringbuffer next call to __next__ to advance backward """
         self._step = -1
 
     def pop(self) -> Any:

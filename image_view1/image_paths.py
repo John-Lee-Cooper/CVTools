@@ -9,7 +9,7 @@ import cv2 as cv
 import ui
 from ring_buffer import RingBuffer
 from paths import file_paths
-from type_ext import FilePath, Image, Optional, List, Iterator
+from type_ext import FilePath, Image, Optional, List
 
 
 # imread supports
@@ -42,7 +42,7 @@ def imwrite(
     file_name: FilePath,
     image: np.ndarray,
     dir_path: Optional[FilePath] = None,
-    params: Optional[int] = None
+    params: Optional[int] = None,
 ) -> None:
     """
     Save image to file_name
@@ -54,7 +54,9 @@ def imwrite(
     cv.imwrite(str(file_name), image, params)
 
 
-def paths_to_image_ring(paths: List[FilePath], subdirectories: bool = True) -> RingBuffer:
+def paths_to_image_ring(
+    paths: List[FilePath], subdirectories: bool = True
+) -> RingBuffer:
     """ Return a RingBuffer of image Paths given a list of file and/or directory Paths """
 
     if len(paths) == 0:

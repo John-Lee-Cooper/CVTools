@@ -13,6 +13,12 @@ import config
 
 
 def process(window: Window, image_path: PosixPath, size: int) -> int:
+    """
+    Read image from image_path,
+    resize it so that it is a width or height is size,
+    and display it in window.
+    Return any key strokes
+    """
     image = imread(image_path)
 
     image = resize(image, width=size, max_size=size)
@@ -38,13 +44,13 @@ def main(paths: List[FilePath], size: int = 640) -> None:
 
             key = process(window, image_path, size)
 
-            if key == config.next_key:
+            if key == config.NEXT_KEY:
                 image_ring.forward()
 
-            elif key == config.prev_key:
+            elif key == config.PREV_KEY:
                 image_ring.backward()
 
-            elif key in config.delete_keys:
+            elif key in config.DELETE_KEYS:
                 trash(image_ring.pop())
 
             else:
@@ -52,4 +58,4 @@ def main(paths: List[FilePath], size: int = 640) -> None:
 
 
 if __name__ == "__main__":
-    main([config.data_path / "lena.jpg"])
+    main([config.DATA_PATH / "lena.jpg"])
