@@ -56,6 +56,10 @@ class Window:
             title = f"{script_name()} {title}"
         cv.setWindowTitle(self.name, title)
 
+    def move(self, x: int, y: int) -> None:
+        """ Move the window to x, y """
+        cv.moveWindow(self.name, x, y)
+
     def display(
         self, image: Image, wait_ms: int = None, title: Optional[FilePath] = None
     ) -> int:
@@ -86,7 +90,3 @@ class Window:
             sys.exit(0)
 
         return key_code
-
-    def move(self, x: int, y: int) -> None:
-        """ Move the window to x, y """
-        cv.moveWindow(self.name, x, y)
