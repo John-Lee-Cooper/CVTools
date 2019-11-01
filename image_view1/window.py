@@ -8,7 +8,7 @@ from pathlib import Path, PosixPath
 import cv2 as cv
 from paths import script_name
 from type_ext import FilePath, Image, Optional
-from keys import ESC_KEY
+import keys
 
 
 class Window:
@@ -86,7 +86,7 @@ class Window:
         key_code = cv.waitKey(int(wait_ms))
         # = cv.waitKeyEx(int(wait_ms))
 
-        if key_code & 0xFF == ESC_KEY:
+        if key_code & 0xFF == keys.ESC:
             sys.exit(0)
 
         return key_code

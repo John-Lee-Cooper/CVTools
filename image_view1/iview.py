@@ -10,6 +10,16 @@ from image_paths import imread, paths_to_image_ring
 from image_utils import resize
 from type_ext import List, FilePath
 import config
+import keys
+
+
+KEY_HELP = """
+    Press
+      <SPACE>     to go to the next image.
+      <BACKSPACE> to go to the previous image.
+      <DELETE>    to delete the current image.
+      <ESCAPE>    to exit.
+    """
 
 
 def process(window: Window, image_path: PosixPath, size: int) -> int:
@@ -44,17 +54,17 @@ def main(paths: List[FilePath], size: int = 640) -> None:
 
             key = process(window, image_path, size)
 
-            if key == config.NEXT_KEY:
-                image_ring.forward()
+            if key == keys.SPACE:
+                image_ring.next()
 
-            elif key == config.PREV_KEY:
-                image_ring.backward()
+            elif key == keys.BACKSPACE:
+                image_ring.prev()
 
-            elif key in config.DELETE_KEYS:
+            elif key == keys.DELETE:
                 trash(image_ring.pop())
 
             else:
-                print(key)
+                print(KEY_HELP)
 
 
 if __name__ == "__main__":

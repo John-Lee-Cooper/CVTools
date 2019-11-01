@@ -38,7 +38,7 @@ class RingBuffer:
 
     def __next__(self):
         if not self._list:
-            raise StopIteration
+            return  # stops iteration
 
         self._index = (self._index + self._step) % len(self._list)
         return self._list[self._index]
@@ -55,6 +55,16 @@ class RingBuffer:
             raise StopIteration
         return self._list[self._index]
 
+    def next(self) -> Any:
+        """ Advance ringbuffer index forward """
+        self._index = (self._index + 1) % len(self._list)
+        return self._list[self._index]
+
+    def prev(self) -> Any:
+        """ Advance ringbuffer index backward """
+        self._index = (self._index - 1) % len(self._list)
+        return self._list[self._index]
+
     def forward(self) -> None:
         """ Cause ringbuffer next call to __next__ to advance forward """
         self._step = 1
@@ -62,6 +72,10 @@ class RingBuffer:
     def backward(self) -> None:
         """ Cause ringbuffer next call to __next__ to advance backward """
         self._step = -1
+
+    def stop(self) -> None:
+        """ Cause ringbuffer next call to __next__ to not advance """
+        self._step = 0
 
     def pop(self) -> Any:
         """
