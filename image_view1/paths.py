@@ -45,7 +45,7 @@ def file_paths(
     result = [
         path
         for path in directory_path.glob(pattern)
-        if valid_exts is None or path.suffix.lower() in valid_exts
+        if path.is_file() and (valid_exts is None or path.suffix.lower() in valid_exts)
     ]
 
     result.sort()
