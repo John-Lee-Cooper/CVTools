@@ -8,6 +8,8 @@ from pathlib import Path
 DATA_PATH = Path("~/python/open_cv/data/").expanduser()
 TRASH_PATH = Path("~/python/open_cv/data/trash/").expanduser()
 
+FONT_PATH = Path("../DroidSansMono.ttf")
+
 # UI click styles
 ERROR_STYLE = dict(fg="red", bold=True)
 WARNING_STYLE = dict(fg="yellow", bold=True)

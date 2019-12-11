@@ -15,14 +15,6 @@ import config
 import keys
 
 
-KEY_HELP = """\
-Press
-  <SPACE>     to go to the next image.
-  <BACKSPACE> to go to the previous image.
-  <DELETE>    to delete the current image.
-  <ESCAPE>    to exit."""
-
-
 def main(paths: List[FilePath]) -> None:
     """
     Main routine
@@ -32,19 +24,28 @@ def main(paths: List[FilePath]) -> None:
       Allow user to step forward and backward through list
     """
 
+    KEY_HELP = """\
+Press
+  <SPACE>     to go to the next image.
+  <BACKSPACE> to go to the previous image.
+  <DELETE>    to delete the current image.
+  <ENTER>     to toggle full screen.
+  <ESCAPE>    to exit."""
+
+    image_ring = paths_to_image_ring(paths)
+
     full_screen = FullScreen()
-    overlay_text = OverlayText(
-        KEY_HELP, "../DroidSansMono.ttf", 18, enabled=False, v_pos="b", h_pos="c"
+
+    overlay_help_text = OverlayText(
+        KEY_HELP, config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c"
     )
 
     with Window() as window:
 
-        image_ring = paths_to_image_ring(paths)
         for image_path in image_ring:
-
             image = imread(image_path)
             image = full_screen(image)
-            image = overlay_text(image)
+            image = overlay_help_text(image)
 
             key = window.display(image, title=image_path, wait_ms=0)
 
@@ -62,7 +63,7 @@ def main(paths: List[FilePath]) -> None:
                 full_screen.toggle_enabled()
 
             else:
-                overlay_text.toggle_enabled()
+                overlay_help_text.toggle_enabled()
                 print(key)
 
 

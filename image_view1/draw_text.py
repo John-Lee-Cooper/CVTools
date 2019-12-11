@@ -16,7 +16,7 @@ import color
 
 
 def make_font(font_path, font_height):
-    return ImageFont.truetype(font_path, font_height)
+    return ImageFont.truetype(str(font_path), font_height)
 
 
 def put_text(image, text, font, color_bgr=(0, 0, 0), x=0, y=0):
@@ -60,7 +60,6 @@ class OverlayText(ImageProcessor):
         self.text = text
 
     def draw_text(self, image, color_bgr=(0, 0, 0), alpha=0.7, bg_color=None):
-        color_bgr = tuple(color_bgr)
 
         lines = self.text.split("\n")
         sizes = [ImageFont.getsize(line, self.font) for line in lines]
@@ -98,6 +97,7 @@ class OverlayText(ImageProcessor):
         x += self.pad
         y += self.pad
 
+        color_bgr = tuple(color_bgr)
         for text, size in zip(lines, sizes):
             # TODO: Align text
             y += size[2]
