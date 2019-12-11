@@ -12,5 +12,3 @@ TRASH_PATH = Path("~/python/open_cv/data/trash/").expanduser()
 ERROR_STYLE = dict(fg="red", bold=True)
 WARNING_STYLE = dict(fg="yellow", bold=True)
 INFO_STYLE = dict(fg="green", bold=False)
-
-

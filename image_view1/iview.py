@@ -3,14 +3,14 @@
 """
 Display all images in paths
 """
-from pathlib import PosixPath
-import cv2 as cv
+
+
 from window import Window
 from paths import trash
-from image_paths import imread, paths_to_image_ring
-from image_utils import resize
 from type_ext import List, FilePath
-from draw_text import make_font, draw_text
+from image_paths import imread, paths_to_image_ring
+from image_utils import FullScreen
+from draw_text import OverlayText
 import config
 import keys
 
@@ -22,31 +22,8 @@ Press
   <DELETE>    to delete the current image.
   <ESCAPE>    to exit."""
 
-show_help = False
-font = make_font('../DroidSansMono.ttf')
 
-
-def process(window: Window, image_path: PosixPath, size: int) -> int:
-    """
-    Read image from image_path,
-    resize it so that it is a width or height is size,
-    and display it in window.
-    Return any key strokes
-    """
-    image = imread(image_path)
-
-    image = resize(image, width=size, max_size=size)
-
-    if show_help:
-        average = cv.mean(image)
-        color = [0 if v > 128 else 255 for v in average]
-        draw_text(image, KEY_HELP, font, 18, color=color, bg_color=average)
-
-    key = window.display(image, 0)
-    return key
-
-
-def main(paths: List[FilePath], size: int = 2048) -> None:
+def main(paths: List[FilePath]) -> None:
     """
     Main routine
       Create window
@@ -55,14 +32,21 @@ def main(paths: List[FilePath], size: int = 2048) -> None:
       Allow user to step forward and backward through list
     """
 
+    full_screen = FullScreen()
+    overlay_text = OverlayText(
+        KEY_HELP, "../DroidSansMono.ttf", 18, enabled=False, v_pos="b", h_pos="c"
+    )
+
     with Window() as window:
 
         image_ring = paths_to_image_ring(paths)
         for image_path in image_ring:
 
-            window.set_title(image_path.name)
+            image = imread(image_path)
+            image = full_screen(image)
+            image = overlay_text(image)
 
-            key = process(window, image_path, size)
+            key = window.display(image, title=image_path, wait_ms=0)
 
             if key == keys.SPACE:
                 image_ring.next()
@@ -73,9 +57,13 @@ def main(paths: List[FilePath], size: int = 2048) -> None:
             elif key == keys.DELETE:
                 trash(image_ring.pop())
 
+            elif key == keys.ENTER:
+                window.toggle_fullscreen()
+                full_screen.toggle_enabled()
+
             else:
-                global show_help
-                show_help = not show_help
+                overlay_text.toggle_enabled()
+                print(key)
 
 
 if __name__ == "__main__":

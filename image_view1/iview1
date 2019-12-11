@@ -11,14 +11,8 @@ import iview
 
 
 @click.command()
-@click.option(
-    "--size",
-    type=click.IntRange(min=8),
-    default=640,
-    help="width or maximum height of displayed image",
-)
 @click.argument("paths", type=PATH, nargs=-1)
-def main(paths, size):
+def main(paths):
     """
     iview1 - a digital photo viewer
 
@@ -41,7 +35,7 @@ def main(paths, size):
         context = click.get_current_context()
         click.echo(context.get_help())
     else:
-        iview.main(paths, size=size)
+        iview.main(paths)
 
 
 if __name__ == "__main__":

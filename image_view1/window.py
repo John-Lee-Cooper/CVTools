@@ -15,7 +15,12 @@ class Window:
     """ Class wrapper for open_cv window functions """
 
     def __init__(
-        self, name="", flag=cv.WINDOW_GUI_NORMAL, image=None, include_script_name=True
+        self,
+        name="",
+        flag=cv.WINDOW_GUI_NORMAL,
+        image=None,
+        include_script_name=True
+        # self, name="", flag = cv.WINDOW_NORMAL, image=None, include_script_name=True
     ):
         name = self.make_name(name)
         if not name or include_script_name:
@@ -59,6 +64,14 @@ class Window:
     def move(self, x: int, y: int) -> None:
         """ Move the window to x, y """
         cv.moveWindow(self.name, x, y)
+
+    def rect(self):
+        """ return x, y, w, h """
+        return cv.getWindowImageRect(self.name)
+
+    def toggle_fullscreen(self):
+        value = cv.getWindowProperty(self.name, cv.WND_PROP_FULLSCREEN)
+        cv.setWindowProperty(self.name, cv.WND_PROP_FULLSCREEN, not value)
 
     def display(
         self, image: Image, wait_ms: int = None, title: Optional[FilePath] = None

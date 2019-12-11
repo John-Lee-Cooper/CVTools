@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 Provide key constants for each platform
 """
@@ -11,6 +9,7 @@ import ui
 ESC = 27
 SPACE = 32
 BACKSPACE = 8
+ENTER = 13
 
 if platform in ("linux", "linux2"):
     DELETE = 255
