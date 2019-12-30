@@ -11,15 +11,23 @@ import PILasOPENCV as Image
 import PILasOPENCV as ImageDraw
 
 from image_processor import ImageProcessor
+from type_ext import FilePath, Color, Optional
 from window import Window
 import color
 
 
-def make_font(font_path, font_height):
+def make_font(font_path: FilePath, font_height: int) -> ImageFont:
     return ImageFont.truetype(str(font_path), font_height)
 
 
-def put_text(image, text, font, color_bgr=(0, 0, 0), x=0, y=0):
+def put_text(
+    image: Image,
+    text: str,
+    font: ImageFont,
+    color_bgr: Color = (0, 0, 0),
+    x: int = 0,
+    y: int = 0,
+):
     w, h, _ = ImageFont.getsize(text, font)
     sub = np.s_[y : y + h, x : x + w, :]
 
@@ -32,17 +40,17 @@ def put_text(image, text, font, color_bgr=(0, 0, 0), x=0, y=0):
 class OverlayText(ImageProcessor):
     def __init__(
         self,
-        text,
-        font_path,
-        font_size,
-        color_bgr=None,
-        bg_color=None,
-        x=0,
-        y=0,
-        v_pos="",
-        h_pos="",
-        pad=8,
-        enabled=True,
+        text: str,
+        font_path: FilePath,
+        font_size: int,
+        color_bgr: Color = None,
+        bg_color: Color = None,
+        x: int = 0,
+        y: int = 0,
+        v_pos: str = "",
+        h_pos: str = "",
+        pad: int = 8,
+        enabled: bool = True,
     ):
         super().__init__(enabled)
         self.font = make_font(font_path, font_size)
@@ -56,10 +64,16 @@ class OverlayText(ImageProcessor):
         self.h_pos = h_pos
         self.pad = pad
 
-    def set_text(self, text):
+    def set_text(self, text: str) -> None:
         self.text = text
 
-    def draw_text(self, image, color_bgr=(0, 0, 0), alpha=0.7, bg_color=None):
+    def draw_text(
+        self,
+        image: Image,
+        color_bgr: Color = (0, 0, 0),
+        alpha: float = 0.7,
+        bg_color: Optional[Color] = None,
+    ) -> None:
 
         lines = self.text.split("\n")
         sizes = [ImageFont.getsize(line, self.font) for line in lines]
@@ -104,7 +118,7 @@ class OverlayText(ImageProcessor):
             put_text(image, text, self.font, color_bgr, x, y)
             y += size[1]
 
-    def __call__(self, image):
+    def __call__(self, image: Image):
         if not self.enabled:
             return image
 

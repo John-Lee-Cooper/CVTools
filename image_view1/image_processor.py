@@ -1,22 +1,22 @@
 """
+TODO
 """
 
+from abc import abstractmethod
 from type_ext import Image
 
 
 class ImageProcessor:
-    """ TODO """
+    """ Base class to manipulate images.  """
 
-    def __init__(self, enabled=True):
+    def __init__(self, enabled: bool = True):
         self.enabled = enabled
 
-    def toggle_enabled(self):
-        """ TODO """
+    def toggle_enabled(self) -> None:
+        """ Toggle enabled """
         self.enabled = not self.enabled
 
+    @abstractmethod
     def __call__(self, image: Image) -> Image:
-        """
-        if not self.enabled:
-            return image
-        return image
-        """
+        """ if enabled apply processing """
+        pass
