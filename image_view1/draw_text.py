@@ -29,7 +29,7 @@ def put_text(
     y: int = 0,
 ):
     w, h, _ = ImageFont.getsize(text, font)
-    sub = np.s_[y : y + h, x : x + w, :]
+    sub = np.s_[y: y + h, x: x + w, :]
 
     pil_image = Image.fromarray(image[sub])
     draw = ImageDraw.Draw(pil_image)

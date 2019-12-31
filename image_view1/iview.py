@@ -13,7 +13,7 @@ from image_utils import FullScreen
 from draw_text import OverlayText
 from group import Group
 import config
-import keys
+import keys as k
 
 
 def main(paths: List[FilePath]) -> None:
@@ -25,24 +25,23 @@ def main(paths: List[FilePath]) -> None:
       Allow user to step forward and backward through list
     """
 
-    key_help = """\
-Press
-  <SPACE>     to go to the next image.
-  <BACKSPACE> to go to the previous image.
-  <DELETE>    to delete the current image.
-  <ENTER>     to toggle full screen.
-  1           to toggle membership in Group 1.
-  <ESCAPE>    to exit."""
-
     image_ring = paths_to_image_ring(paths)
 
     full_screen = FullScreen()
 
-    overlay_help_text = OverlayText(
-        key_help, config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c"
-    )
-
     group1 = Group()
+
+    keys = k.KeyAssignments()
+    keys.append("next", k.SPACE, "to go to the next image."),
+    keys.append("previous", k.BACKSPACE, "to go to the previous image."),
+    keys.append("delete", k.DELETE, "to delete the current image."),
+    keys.append("fullscreen", k.ENTER, "to toggle full screen."),
+    keys.append("group1", "1", "to toggle membership in Group 1."),
+    keys.append("exit", k.ESCAPE, "to exit."),
+    help_string = keys.help_string()
+
+    overlay_help_text = OverlayText(help_string, config.FONT_PATH, 18,
+                                    enabled=False, v_pos="b", h_pos="c")
 
     with Window() as window:
 
@@ -52,30 +51,31 @@ Press
             image = overlay_help_text(image)
 
             image_path_abs = str(image_path.absolute())
-            if image_path_abs in group1.items:
+            if image_path_abs in group1:
                 cv.rectangle(image, (10, 10), (20, 20), (0, 255, 0), -1)
 
             key = window.display(image, title=image_path, wait_ms=0)
 
-            if key == keys.SPACE:
+            command = keys.command(key)
+
+            if command == "next":
                 image_ring.next()
 
-            elif key == keys.BACKSPACE:
+            elif command == "previous":
                 image_ring.prev()
 
-            elif key == keys.DELETE:
+            elif command == "delete":
                 trash(image_ring.pop())
 
-            elif key == keys.ENTER:
+            elif command == "fullscreen":
                 window.toggle_fullscreen()
                 full_screen.toggle_enabled()
 
-            elif key == ord("1"):
+            elif command == "group1":
                 group1.toggle_item(image_path_abs)
 
             else:
                 overlay_help_text.toggle_enabled()
-                print(key)
 
 
 if __name__ == "__main__":

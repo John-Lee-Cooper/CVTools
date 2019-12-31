@@ -99,7 +99,7 @@ class Window:
         key_code = cv.waitKey(int(wait_ms))
         # = cv.waitKeyEx(int(wait_ms))
 
-        if key_code & 0xFF == keys.ESC:
+        if key_code & 0xFF == keys.ESCAPE:
             sys.exit(0)
 
         return key_code
