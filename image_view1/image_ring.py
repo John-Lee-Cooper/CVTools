@@ -6,7 +6,7 @@ Display all images in paths
 
 import ui
 from pathlib import Path
-from type_ext import List, FilePath
+from type_ext import Tuple, List, FilePath, Image
 from image_paths import images_in_paths, imread
 from ring_buffer import RingBuffer
 
@@ -20,16 +20,16 @@ class ImageRing:
             first_image = image_paths_[0]
             image_paths_ = images_in_paths([first_image.parent])
         self._ring = RingBuffer(image_paths_, first_image)
-        self.image_path = None
-        self.image = None
+        self._image_path = None
+        self._image = None
         self.fetch()
 
-    def __call__(self) -> None:
-        return self.image.copy()
+    def __call__(self) -> Tuple[FilePath, Image]:
+        return self._image_path, self._image.copy()
 
     def fetch(self) -> None:
-        self.image_path = self._ring.value()
-        self.image = imread(self.image_path)
+        self._image_path = self._ring.value()
+        self._image = imread(self._image_path)
 
     def next(self) -> None:
         self._ring.next()

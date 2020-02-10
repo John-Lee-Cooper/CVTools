@@ -2,6 +2,14 @@
 
 """
 Display all images in paths
+
+
+TODO:
+  Display filename and size
+  Multiple groups
+  Output class
+  Play mode
+  Transition
 """
 
 import cv2 as cv
@@ -17,6 +25,7 @@ import keys as k
 
 
 class App:
+    """ TODO """
 
     def __init__(self, paths: List[FilePath]):
 
@@ -71,12 +80,12 @@ class App:
           Display images
           Allow user to step forward and backward through list
         """
-        image = image_source()
+        image_path, image = image_source()
         image = self.full_screen(image)
         image = self.overlay_help_text(image)
-        image = self.group.mark(image, str(image_source.image_path.absolute()))
-
-        key = self.window.display(image, title=image_source.image_path, wait_ms=0)
+        image = self.group.mark(image, str(image_path))  # str(image_path.absolute()))
+        # print(f"{image.shape[1]} x {image.shape[0]} {image_path.name}")
+        key = self.window.display(image, title=image_path, wait_ms=0)
         self.handle_keystroke(key)
 
 
