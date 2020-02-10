@@ -83,7 +83,7 @@ class OverlayText(ImageProcessor):
 
         h, w = image.shape[:2]
         height = min(h, height)
-        width = min(h, width)
+        width = min(w, width)
 
         if self.h_pos == "l":
             x = self.pad
@@ -104,7 +104,7 @@ class OverlayText(ImageProcessor):
             y = self.y
 
         if bg_color:
-            sub = np.s_[y : y + height, x : x + width, :]
+            sub = np.s_[y:y + height, x:x + width, :]
             overlay = np.full((height, width, depth), bg_color, dtype=np.uint8)
             image[sub] = cv.addWeighted(overlay, alpha, image[sub], 1 - alpha, 0)
 

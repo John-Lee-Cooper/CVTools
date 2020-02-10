@@ -8,7 +8,7 @@ import cv2 as cv
 from window import Window
 from paths import trash
 from type_ext import List, FilePath
-from image_paths import imread, paths_to_image_ring
+from image_ring import ImageRing
 from image_utils import FullScreen
 from draw_text import OverlayText
 from group import Group
@@ -16,68 +16,69 @@ import config
 import keys as k
 
 
-def main(paths: List[FilePath]) -> None:
-    """
-    Main routine
-      Create window
-      Create image Path list
-      Display images
-      Allow user to step forward and backward through list
-    """
+class App:
 
-    image_ring = paths_to_image_ring(paths)
+    def __init__(self, paths: List[FilePath]):
 
-    full_screen = FullScreen()
+        self.image_source = ImageRing(paths)
+        self.full_screen = FullScreen()
+        self.group = Group()
 
-    group1 = Group()
+        self.keys = k.KeyAssignments()
+        self.keys.append("next", k.SPACE, "to go to the next image."),
+        self.keys.append("previous", k.BACKSPACE, "to go to the previous image."),
+        self.keys.append("delete", k.DELETE, "to delete the current image."),
+        self.keys.append("fullscreen", k.ENTER, "to toggle full screen."),
+        self.keys.append("group1", "1", "to toggle membership in Group 1."),
+        self.keys.append("exit", k.ESCAPE, "to exit."),
 
-    keys = k.KeyAssignments()
-    keys.append("next", k.SPACE, "to go to the next image."),
-    keys.append("previous", k.BACKSPACE, "to go to the previous image."),
-    keys.append("delete", k.DELETE, "to delete the current image."),
-    keys.append("fullscreen", k.ENTER, "to toggle full screen."),
-    keys.append("group1", "1", "to toggle membership in Group 1."),
-    keys.append("exit", k.ESCAPE, "to exit."),
-    help_string = keys.help_string()
+        self.overlay_help_text = OverlayText(
+            self.keys.help_string(), config.FONT_PATH, 18,
+            enabled=False, v_pos="b", h_pos="c")
 
-    overlay_help_text = OverlayText(help_string, config.FONT_PATH, 18,
-                                    enabled=False, v_pos="b", h_pos="c")
+        with Window() as self.window:
+            while True:
+                self.process(self.image_source)
 
-    with Window() as window:
+    def handle_keystroke(self, key):
+        command = self.keys.command(key)
 
-        for image_path in image_ring:
-            image = imread(image_path)
-            image = full_screen(image)
-            image = overlay_help_text(image)
+        if command == "next":
+            self.image_source.next()
 
-            image_path_abs = str(image_path.absolute())
-            if image_path_abs in group1:
-                cv.rectangle(image, (10, 10), (20, 20), (0, 255, 0), -1)
+        elif command == "previous":
+            self.image_source.prev()
 
-            key = window.display(image, title=image_path, wait_ms=0)
+        elif command == "delete":
+            trash(self.image_source.image_path)
+            self.image_source.pop()
 
-            command = keys.command(key)
+        elif command == "fullscreen":
+            self.window.toggle_fullscreen()
+            self.full_screen.toggle_enabled()
 
-            if command == "next":
-                image_ring.next()
+        elif command == "group1":
+            self.group.toggle()
 
-            elif command == "previous":
-                image_ring.prev()
+        else:
+            self.overlay_help_text.toggle_enabled()
 
-            elif command == "delete":
-                trash(image_ring.pop())
+    def process(self, image_source) -> None:
+        """
+        Main routine
+          Create window
+          Create image Path list
+          Display images
+          Allow user to step forward and backward through list
+        """
+        image = image_source()
+        image = self.full_screen(image)
+        image = self.overlay_help_text(image)
+        image = self.group.mark(image, str(image_source.image_path.absolute()))
 
-            elif command == "fullscreen":
-                window.toggle_fullscreen()
-                full_screen.toggle_enabled()
-
-            elif command == "group1":
-                group1.toggle_item(image_path_abs)
-
-            else:
-                overlay_help_text.toggle_enabled()
+        key = self.window.display(image, title=image_source.image_path, wait_ms=0)
+        self.handle_keystroke(key)
 
 
 if __name__ == "__main__":
-    main([config.DATA_PATH / "lena.jpg"])
-
+    App([config.DATA_PATH / "lena.jpg"])

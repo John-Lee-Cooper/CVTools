@@ -35,7 +35,7 @@ def main(paths):
         context = click.get_current_context()
         click.echo(context.get_help())
     else:
-        iview.main(paths)
+        iview.App(paths)
 
 
 if __name__ == "__main__":

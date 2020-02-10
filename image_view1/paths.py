@@ -21,6 +21,7 @@ def trash(path: FilePath) -> None:
     """
     src_path = Path(path)
     dst_path = config.TRASH_PATH / src_path.name
+    print(src_path, dst_path)
 
     # Ensure we are not overwriting anything in trash
     count = 1
