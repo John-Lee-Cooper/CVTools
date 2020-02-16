@@ -1,4 +1,4 @@
-Click
+typer
 freetype-py
 numpy
 opencv-contrib-python==4.1.2.30  #4.2.0.32 breaks
