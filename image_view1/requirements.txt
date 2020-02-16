@@ -2,8 +2,8 @@ Click==7.0
 freetype-py==2.1.0.post1
 gif2numpy==1.3
 kaitaistruct==0.8
-mss==4.0.3
-numpy==1.18.0
+mss==5.0.0
+numpy==1.18.1
 numpy2gif==1.0
 opencv-contrib-python==4.1.2.30
 opencv-python==4.1.2.30
