@@ -6,7 +6,7 @@ run:.venv
 
 .venv:requirements
 	make clean; \
-	virtualenv -p python3 .venv; \
+	python3 -m venv .venv; \
 	source .venv/bin/activate; \
 	pip install -r requirements
 	pip freeze > requirements.txt
