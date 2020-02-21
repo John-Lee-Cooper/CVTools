@@ -27,7 +27,11 @@ class ImageRing:
         self._fetch()
 
     def __call__(self) -> Tuple[FilePath, Image]:
-        return self._image_path, self._image.copy()
+        return self._image.copy()
+
+    @property
+    def path(self):
+        return self._image_path
 
     def _fetch(self) -> None:
         self._image_path = self._ring.value()

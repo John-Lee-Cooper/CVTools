@@ -3,10 +3,9 @@ Provide key constants for each platform
 """
 
 from sys import platform
-from typing import Optional
+from typing import Optional, Callable
 
 import ui
-
 
 
 ESCAPE = 27
@@ -35,17 +34,17 @@ KEY_NAME = {
 class KeyAssignment:
     max_width = 0
 
-    def __init__(self, command: str, value: str, description: str):
+    def __init__(self, value: str, handler: Callable, description: str):
 
         if isinstance(value, type(0)):
             name = KEY_NAME.get(value)
         else:
             name, value = value, ord(value)
 
-        self.command = command
-        self.value = value
         self.name = name
+        self.value = value
         self.description = description
+        self.handler = handler
 
         KeyAssignment.max_width = max(KeyAssignment.max_width, len(name))
 
@@ -58,18 +57,15 @@ class KeyAssignments:
         self.list_ = []
         self.default_command = default_command
 
-    def append(self, command: str, value: str, description: str):
-        self.list_.append(KeyAssignment(command, value, description))
-
-    def command(self, key: int) -> Optional[str]:
-        for ka in self.list_:
-            if key == ka.value:
-                if callable(ka.command):
-                    ka.command()
-                    return None
-                return ka.command
-        print(key)
-        return self.default_command
+    def append(self, value: str, handler: Callable, description: str):
+        self.list_.append(KeyAssignment(value, handler, description))
 
     def help_string(self, header: str = "Press", delim: str = "\n  ") -> str:
         return delim.join([header] + [str(key) for key in self.list_])
+
+    def handle_keystroke(self, key: int):
+        for ka in self.list_:
+            if key == ka.value:
+                ka.handler()
+                return
+        self.default_handler()
