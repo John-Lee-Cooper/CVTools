@@ -1,42 +1,30 @@
 SHELL := /bin/bash
 
-run:.venv
-	source .venv/bin/activate; \
+run:venv
+	source venv/bin/activate; \
 	./iview.py
 
 clean:
 	-@rm -f requirements.txt
-	-@rm -rf .venv
+	-@rm -rf venv
 	-@rm -rf __pycache__
 	#-@rm -rf build dist *.spec
 	-@rm -rf build dist setup.py
 	-@rm -f .DS_Store ../.DS_Store
 
-.venv:requirements
+venv:requirements
 	make clean; \
-	python3 -m venv .venv; \
-	source .venv/bin/activate; \
+	python3 -m venv venv; \
+	source venv/bin/activate; \
 	pip install --upgrade pip; \
 	pip install -r requirements;
 	pip freeze > requirements.txt;
 
-exe:.venv
+exe:venv
 	-@rm -rf build dist setup.py
 	py2applet --make-setup i_view.py
 	python setup.py py2app -A --argv-emulation --emulate-shell-environment
 	-@rm -rf ~/Applications/i_view.app
 	mv dist/i_view.app ~/Applications
 	-@rm -rf build dist setup.py
-
-# --iconfile --plist
-#open -a dist/iview
-
-#exe:.venv
-#	pyinstaller --windowed iview2
-#	-@cp -r .venv/lib/python3.8/site-packages/freetype dist/iview2
-#	-@rm -f ~/bin/iview
-#	ln -s ~/python/cv_tools/image_view1/dist/iview2/iview2 ~/bin/iview
-#	~/bin/iview --help > /dev/null
-#	pyinstaller --hidden-import freetype-py iview2.py
-#	ln -s $(cd dist/iview2/ && pwd -P)/iview2 ~/bin/iview
 

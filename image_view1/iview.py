@@ -14,14 +14,14 @@ TODO:
 import sys
 import cv2 as cv
 
-from lib.window import Window
-from lib.paths import trash
-from lib.type_ext import List, FilePath
-from lib.image_ring import ImageRing
-from lib.image_utils import FullScreen
-from lib.draw_text import OverlayText
-import lib.config
-import lib.keys as k
+from window import Window
+from paths import trash
+from type_ext import List, FilePath
+from image_ring import ImageRing
+from image_utils import FullScreen
+from draw_text import OverlayText
+import config
+import keys as k
 
 
 class App:
