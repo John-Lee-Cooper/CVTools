@@ -16,7 +16,7 @@ import typer
 
 app = typer.Typer(help="Virtual Environment Management utility.")
 
-
+APP_PATH = Path("/Users/johncooper/Applications")  # FIXME
 VENV_PATH = Path("./venv")
 REQUIREMENTS_PATH = Path("requirements")
 REQUIREMENTS_TXT_PATH = Path("requirements.txt")
@@ -48,7 +48,12 @@ def echo(string):
 
 def remove(path: Path):
     if path.exists():
-        rmtree(path)
+        if path.is_dir():
+            rmtree(path)
+        else:
+            path.unlink()
+    else:
+        print(path, 11111111111111111111111111111111)
 
 
 def before(path1: Path, path2: Path):
@@ -105,6 +110,7 @@ def exe():
     Build exectutable
     """
     make(VENV_PATH, [REQUIREMENTS_PATH], venv)
+    remove(APP_PATH / "i_view.app")
 
     echo(exe.__doc__)
     run(exe_commands)
@@ -135,8 +141,7 @@ init_commands = f"""
 exe_commands = f"""
     {ACTIVATE_COMMAND} py2applet --make-setup i_view.py
     {ACTIVATE_COMMAND} python setup.py py2app -A --argv-emulation --emulate-shell-environment
-    mv dist/i_view.app ~/Applications
-    mv dist/i_view.app ~/Applications
+    mv dist/i_view.app {APP_PATH}
 """
 
 
