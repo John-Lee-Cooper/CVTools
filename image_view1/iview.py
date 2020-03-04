@@ -27,9 +27,9 @@ import keys as k
 class App:
     """ TODO """
 
-    def __init__(self, paths: List[FilePath]):
+    def __init__(self, paths: List[FilePath], subdirectories: bool = False):
 
-        self.image_source = ImageRing(paths)
+        self.image_source = ImageRing(paths, subdirectories)
         self.full_screen = FullScreen()
         self.overlay_help_text = OverlayText("", config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c")
 

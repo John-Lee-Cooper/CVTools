@@ -12,13 +12,13 @@ from ring_buffer import RingBuffer
 
 
 class ImageRing:
-    def __init__(self, paths: List[FilePath]):
+    def __init__(self, paths: List[FilePath], subdirectories: bool = False):
 
         first_image = None
-        image_paths_ = images_in_paths(paths)
+        image_paths_ = images_in_paths(paths, subdirectories)
         if len(image_paths_) == 1:
             first_image = image_paths_[0]
-            image_paths_ = images_in_paths([first_image.parent])
+            image_paths_ = images_in_paths([first_image.parent], subdirectories)
         if len(image_paths_) == 0:
             exit()
         self._ring = RingBuffer(image_paths_, first_image)
