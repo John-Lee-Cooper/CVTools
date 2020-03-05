@@ -11,7 +11,10 @@ import util
 import iview
 
 
-def main(paths: List[Path]):  # = typer.Option(..., prompt="Image path")):
+def main(
+    paths: List[Path],
+    recursive: bool = typer.Option(False, "--recursive", "-r"),
+):  # = typer.Option(..., prompt="Image path")):
     """
     {app} - a digital photo viewer
 
@@ -30,7 +33,7 @@ def main(paths: List[Path]):  # = typer.Option(..., prompt="Image path")):
       <ESCAPE>    to exit.
     """
 
-    iview.App(paths).run()
+    iview.App(paths, subdirectories=recursive).run()
 
 
 if __name__ == "__main__":
