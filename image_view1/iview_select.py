@@ -20,7 +20,9 @@ class IViewSelect(App):
 
         super().__init__(paths)
         self.group = Group()
-        self.keys.append("1", self.group.toggle, "to toggle membership in Group 1."),  # FIXME: insert before exit
+        self.keys.append(
+            "1", self.group.toggle, "to toggle membership in Group 1."
+        ),  # FIXME: insert before exit
 
     def process(self, image_source) -> None:
         """

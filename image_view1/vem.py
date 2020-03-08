@@ -15,24 +15,26 @@ from shutil import rmtree
 
 try:
     import typer
-except:
-    print('python -m pip install typer')
+except ModuleNotFoundError:
+    print("'typer' not installed.  Try: pip install typer")
     exit(0)
 
 app = typer.Typer(help="Virtual Environment Management utility.")
 
-APP_PATH = Path("/Users/johncooper/Applications")  # FIXME
 VENV_PATH = Path("./venv")
 REQUIREMENTS_PATH = Path("requirements")
 REQUIREMENTS_TXT_PATH = Path("requirements.txt")
 
-windows = platform.system() == "Windows"
-SEPARATOR = " & " if windows else "; "
-ACTIVATE_PATH = VENV_PATH / ("Scripts/activate.bat" if windows else "bin/activate")
+is_windows = platform.system() == "Windows"
+SEPARATOR = " & " if is_windows else "; "
+ACTIVATE_PATH = VENV_PATH / ("Scripts/activate.bat" if is_windows else "bin/activate")
 ACTIVATE_COMMAND = (
-    f"{ACTIVATE_PATH} {SEPARATOR}" if windows else f"source {ACTIVATE_PATH} {SEPARATOR}"
+    f"{ACTIVATE_PATH}{SEPARATOR}"
+    if is_windows
+    else f"source {ACTIVATE_PATH}{SEPARATOR}"
 )
 
+APP_PATH = Path("~/Applications").expanduser()
 # SOURCE_PATHS = sorted(Path(".").glob("*.py"))
 
 venv_commands = f"""
@@ -44,7 +46,6 @@ venv_commands = f"""
 
 init_commands = ""
 run_commands = ""
-exe_commands = ""
 
 
 def echo(string):
@@ -107,10 +108,42 @@ def init():
     run(init_commands)
 
 
+@app.command("run")
+def run_():
+    """
+    Run flask app
+    """
+    make(VENV_PATH, [REQUIREMENTS_PATH], venv)
+
+    echo(run_.__doc__)
+    run(run_commands)
+
+
+# ------------------------------------------------------------------------------------------------------
+
+RUN_PATH = Path("iview.py")
+run_commands = f"""
+    {ACTIVATE_COMMAND} python {RUN_PATH}
+    """
+
+exe_commands = f"""
+    {ACTIVATE_COMMAND} py2applet --make-setup i_view.py
+    {ACTIVATE_COMMAND} python setup.py py2app -A --argv-emulation --emulate-shell-environment
+    mv dist/i_view.app {APP_PATH}
+"""
+
+'''
+SCRIPTS_PATH = Path("scripts")
+init_commands = f"""
+    {ACTIVATE_COMMAND} {SCRIPTS_PATH / 'load.py'} {SCRIPTS_PATH / 'python.md'}
+    """
+'''
+
+
 @app.command()
 def exe():
     """
-    Build exectutable
+    Build executable
     """
     make(VENV_PATH, [REQUIREMENTS_PATH], venv)
     remove(APP_PATH / "i_view.app")
@@ -123,38 +156,10 @@ def exe():
     remove(Path("setup.py"))
 
 
-@app.command("run")
-def run_():
-    """
-    Run flask app
-    """
-    make(VENV_PATH, [REQUIREMENTS_PATH], venv)
-
-    echo(run_.__doc__)
-    run(run_commands)
-
-
-'''
-SCRIPTS_PATH = Path("scripts")
-init_commands = f"""
-    {ACTIVATE_COMMAND} {SCRIPTS_PATH / 'load.py'} {SCRIPTS_PATH / 'python.md'}
-    """
-'''
-
-exe_commands = f"""
-    {ACTIVATE_COMMAND} py2applet --make-setup i_view.py
-    {ACTIVATE_COMMAND} python setup.py py2app -A --argv-emulation --emulate-shell-environment
-    mv dist/i_view.app {APP_PATH}
-"""
-
-
-RUN_PATH = Path("iview.py")
-run_commands = f"""
-    {ACTIVATE_COMMAND} python {RUN_PATH}
-    """
-
-
-
 if __name__ == "__main__":
-    # typer.run(web)
-    app()
+    import sys
+
+    if len(sys.argv) == 1:
+        typer.run_()
+    else:
+        app()

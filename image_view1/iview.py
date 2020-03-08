@@ -31,11 +31,15 @@ class App:
 
         self.image_source = ImageRing(paths, subdirectories)
         self.full_screen = FullScreen()
-        self.overlay_help_text = OverlayText("", config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c")
+        self.overlay_help_text = OverlayText(
+            "", config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c"
+        )
 
         self.keys = k.KeyAssignments()
         self.keys.append(k.SPACE, self.image_source.next, "to go to the next image."),
-        self.keys.append(k.BACKSPACE, self.image_source.prev, "to go to the previous image."),
+        self.keys.append(
+            k.BACKSPACE, self.image_source.prev, "to go to the previous image."
+        ),
         self.keys.append(k.DELETE, self.delete, "to delete the current image."),
         self.keys.append(k.ENTER, self.fullscreen, "to toggle full screen."),
         self.keys.append(k.ESCAPE, sys.exit, "to exit."),

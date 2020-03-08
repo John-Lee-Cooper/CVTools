@@ -6,27 +6,35 @@ import platform
 import numpy as np
 import cv2 as cv
 
-
 from image_processor import ImageProcessor
 from type_ext import Image
 
 
 if platform.system() == "Windows":
 
-  def screen_size():
-    import ctypes
-    user32 = ctypes.windll.user32
-    # screen_w, screen_h = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-    screen_w, screen_h = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
-    return screen_w, screen_h
+    def screen_size():
+        import ctypes
+
+        user32 = ctypes.windll.user32
+        # screen_w, screen_h = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+        screen_w, screen_h = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
+        return screen_w, screen_h
+
 
 else:
 
-  def screen_size():
-    from pymouse import PyMouse
-    # from pykeyboard import PyKeyboard
-    screen_w, screen_h = PyMouse().screen_size()
-    return screen_w, screen_h
+    def screen_size():
+        from pymouse import PyMouse
+
+        # from pykeyboard import PyKeyboard
+        screen_w, screen_h = PyMouse().screen_size()
+        return screen_w, screen_h
+
+
+"""
+    import pyautogui
+    screen_w, screen_h = pyautogui.size()
+"""
 
 
 class FullScreen(ImageProcessor):

@@ -11,7 +11,9 @@ from type_ext import FilePath, Image, Optional, List
 
 
 # imread supports
-IMAGE_EXTS = ".bmp .dib .jpeg .jpg .jpe .jp2 .webp .png .pbm .pgm .ppm .pxm .pnm .pfm .sr .ras .tif .tiff .exr .hdr .pic".split(" ")
+IMAGE_EXTS = ".bmp .dib .jpeg .jpg .jpe .jp2 .webp .png .pbm .pgm .ppm .pxm .pnm .pfm .sr .ras .tif .tiff .exr .hdr .pic".split(
+    " "
+)
 
 
 def is_image_path(path: PosixPath) -> bool:
