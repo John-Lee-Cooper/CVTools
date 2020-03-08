@@ -12,7 +12,12 @@ import subprocess
 from typing import List, Callable
 from pathlib import Path
 from shutil import rmtree
-import typer
+
+try:
+    import typer
+except:
+    print('pip install typer')
+    exit(0)
 
 app = typer.Typer(help="Virtual Environment Management utility.")
 
@@ -52,8 +57,6 @@ def remove(path: Path):
             rmtree(path)
         else:
             path.unlink()
-    else:
-        print(path, 11111111111111111111111111111111)
 
 
 def before(path1: Path, path2: Path):
@@ -149,6 +152,7 @@ RUN_PATH = Path("iview.py")
 run_commands = f"""
     {ACTIVATE_COMMAND} python {RUN_PATH}
     """
+
 
 
 if __name__ == "__main__":
