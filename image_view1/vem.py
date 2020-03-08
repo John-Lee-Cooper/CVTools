@@ -16,7 +16,7 @@ from shutil import rmtree
 try:
     import typer
 except:
-    print('pip install typer')
+    print('python -m pip install typer')
     exit(0)
 
 app = typer.Typer(help="Virtual Environment Management utility.")
@@ -36,10 +36,10 @@ ACTIVATE_COMMAND = (
 # SOURCE_PATHS = sorted(Path(".").glob("*.py"))
 
 venv_commands = f"""
-    python3 -m venv {VENV_PATH}
-    {ACTIVATE_COMMAND} pip install --upgrade pip
-    {ACTIVATE_COMMAND} pip install -r {REQUIREMENTS_PATH}
-    {ACTIVATE_COMMAND} pip freeze > {REQUIREMENTS_TXT_PATH}
+    python -m venv {VENV_PATH}
+    {ACTIVATE_COMMAND} python -m pip install --upgrade pip
+    {ACTIVATE_COMMAND} python -m pip install -r {REQUIREMENTS_PATH}
+    {ACTIVATE_COMMAND} python -m pip freeze > {REQUIREMENTS_TXT_PATH}
     """
 
 init_commands = ""
