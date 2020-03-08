@@ -4,7 +4,6 @@
 Display all images in paths
 
 TODO:
-  Make recursing an option - default false
   Display filename and size
   Output class
   Play mode
@@ -18,7 +17,7 @@ from window import Window
 from paths import trash
 from type_ext import List, FilePath
 from image_ring import ImageRing
-from image_utils import FullScreen
+from image_utils import FitCanvas, screen_size
 from draw_text import OverlayText
 import config
 import keys as k
@@ -29,8 +28,10 @@ class App:
 
     def __init__(self, paths: List[FilePath], subdirectories: bool = False):
 
+        screen_w, screen_h = screen_size()
         self.image_source = ImageRing(paths, subdirectories)
-        self.full_screen = FullScreen()
+        self.part_screen = FitCanvas(640, 480, enabled=True)
+        self.full_screen = FitCanvas(screen_w, screen_h)
         self.overlay_help_text = OverlayText(
             "", config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c"
         )
@@ -48,15 +49,16 @@ class App:
 
         self.window = None
 
-    def fullscreen(self):
+    def fullscreen(self) -> None:
         self.window.toggle_fullscreen()
         self.full_screen.toggle_enabled()
+        self.part_screen.toggle_enabled()
 
-    def delete(self):
+    def delete(self) -> None:
         trash(self.image_source.path)
         self.image_source.pop()
 
-    def run(self):
+    def run(self) -> None:
         self.overlay_help_text.set_text(self.keys.help_string())
         with Window() as self.window:
             while True:
@@ -72,6 +74,7 @@ class App:
         """
         image = image_source()
         image = self.full_screen(image)
+        image = self.part_screen(image)
         image = self.overlay_help_text(image)
         key = self.window.display(image, title=image_source.path, wait_ms=0)
         self.keys.handle_keystroke(key)

@@ -7,12 +7,13 @@ import numpy as np
 import cv2 as cv
 
 from image_processor import ImageProcessor
-from type_ext import Image
+from type_ext import Image, Tuple, Optional
+import config
 
 
 if platform.system() == "Windows":
 
-    def screen_size():
+    def screen_size() -> Tuple[int, int]:
         import ctypes
 
         user32 = ctypes.windll.user32
@@ -23,12 +24,12 @@ if platform.system() == "Windows":
 
 else:
 
-    def screen_size():
+    def screen_size() -> Tuple[int, int]:
         from pymouse import PyMouse
 
         # from pykeyboard import PyKeyboard
         screen_w, screen_h = PyMouse().screen_size()
-        return screen_w, screen_h
+        return int(screen_w), int(screen_h)
 
 
 """
@@ -37,16 +38,24 @@ else:
 """
 
 
-class FullScreen(ImageProcessor):
-    """ Resize image to fit screen without changing aspect ratio """
+class FitCanvas(ImageProcessor):
+    """ Resize image to fit canvas without changing aspect ratio """
 
-    def __init__(self, interpolation: int = cv.INTER_CUBIC, enabled: bool = False):
+    def __init__(
+            self,
+            width: int,
+            height: int,
+            interpolation: int = cv.INTER_CUBIC,
+            enabled: bool = False,
+            matte_color: Optional[Tuple] = config.MATTE_COLOR,
+            matte_size: int = config.MATTE_SIZE,
+    ):
         super().__init__(enabled)
 
-        screen_w, screen_h = screen_size()
-        self.screen_w = int(screen_w)
-        self.screen_h = int(screen_h)
+        self.canvas_w, self.canvas_h = width, height
         self.interpolation = interpolation
+        self.matte_color = matte_color
+        self.matte_size = matte_size
 
     def __call__(self, image: Image) -> Image:
         """
@@ -56,18 +65,23 @@ class FullScreen(ImageProcessor):
         """
         h, w = image.shape[:2]
 
-        if not self.enabled and h <= self.screen_h and w <= self.screen_w:
+        if not self.enabled:  # and h <= height and w <= width:
             return image
 
-        depth = image.shape[2] if len(image.shape) == 3 else 2
-
-        height = self.screen_h
-        width = self.screen_w
-        result = np.zeros((height, width, depth), image.dtype)
-
+        height = self.canvas_h
+        width = self.canvas_w
         scale_factor = min(height / h, width / w)
         scaled_width = int(w * scale_factor)
         scaled_height = int(h * scale_factor)
+
+        if self.matte_color is None:
+            return cv.resize(image, (scaled_width, scaled_height), interpolation=self.interpolation)
+
+        scaled_width = min(scaled_width, width - self.matte_size)
+        scaled_height = min(scaled_height, height - self.matte_size)
+        depth = image.shape[2] if len(image.shape) == 3 else 1
+        result = np.empty((height, width, depth), image.dtype)
+        result[:] = self.matte_color
         h_pad = (width - scaled_width) // 2
         v_pad = (height - scaled_height) // 2
         l, r = h_pad, h_pad + scaled_width

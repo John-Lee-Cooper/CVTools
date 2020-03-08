@@ -160,6 +160,6 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) == 1:
-        typer.run_()
+        typer.run(run_)
     else:
         app()

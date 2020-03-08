@@ -3,6 +3,7 @@ Configure the tool
 """
 
 from pathlib import Path
+import color
 
 # Paths
 ROOT_PATH = Path("~/Development/cv_tools").expanduser()
@@ -16,3 +17,8 @@ FAVORITES_PATH = ROOT_PATH / "favorites.txt"
 ERROR_STYLE = dict(fg="red", bold=True)
 WARNING_STYLE = dict(fg="yellow", bold=True)
 INFO_STYLE = dict(fg="green", bold=False)
+
+MATTE_COLOR = color.grey25
+MATTE_COLOR = (64, 0, 0)
+MATTE_COLOR = (0, 32, 0)
+MATTE_SIZE = 32
