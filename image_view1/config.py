@@ -5,13 +5,12 @@ Configure the tool
 from pathlib import Path
 
 # Paths
-OPEN_CV = Path("~/python/open_cv").expanduser()
-DATA_PATH = OPEN_CV / "data/"
-TRASH_PATH = OPEN_CV / "data/trash/"
-
-CV_TOOLS = Path("~/python/cv_tools").expanduser()
-FONT_PATH = CV_TOOLS / "DroidSansMono.ttf"
-FAVORITES_PATH = CV_TOOLS / "favorites.txt"
+ROOT_PATH = Path("~/python/cv_tools").expanduser()
+ROOT_PATH = Path("~/Development/cv_tools").expanduser()
+DATA_PATH = ROOT_PATH / "data/"
+TRASH_PATH = DATA_PATH / "trash/"
+FONT_PATH = DATA_PATH / "fonts" / "DroidSansMono.ttf"
+FAVORITES_PATH = ROOT_PATH / "favorites.txt"
 
 # UI click styles
 ERROR_STYLE = dict(fg="red", bold=True)

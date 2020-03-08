@@ -2,14 +2,31 @@
 Support manipulating numpy/open_cv images
 """
 
+import platform
 import numpy as np
 import cv2 as cv
-from pymouse import PyMouse
 
-# from pykeyboard import PyKeyboard
 
 from image_processor import ImageProcessor
 from type_ext import Image
+
+
+if platform.system() == "Windows":
+
+  def screen_size():
+    import ctypes
+    user32 = ctypes.windll.user32
+    # screen_w, screen_h = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    screen_w, screen_h = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
+    return screen_w, screen_h
+
+else:
+
+  def screen_size():
+    from pymouse import PyMouse
+    # from pykeyboard import PyKeyboard
+    screen_w, screen_h = PyMouse().screen_size()
+    return screen_w, screen_h
 
 
 class FullScreen(ImageProcessor):
@@ -18,7 +35,7 @@ class FullScreen(ImageProcessor):
     def __init__(self, interpolation: int = cv.INTER_CUBIC, enabled: bool = False):
         super().__init__(enabled)
 
-        screen_w, screen_h = PyMouse().screen_size()
+        screen_w, screen_h = screen_size()
         self.screen_w = int(screen_w)
         self.screen_h = int(screen_h)
         self.interpolation = interpolation
