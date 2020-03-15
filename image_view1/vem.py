@@ -39,7 +39,7 @@ APP_PATH = Path("~/Applications").expanduser()
 
 venv_commands = f"""
     python -m venv {VENV_PATH}
-    {ACTIVATE_COMMAND} python -m pip install --upgrade pip
+    {ACTIVATE_COMMAND} python -m pip install --upgrade pip setuptools
     {ACTIVATE_COMMAND} python -m pip install -r {REQUIREMENTS_PATH}
     {ACTIVATE_COMMAND} python -m pip freeze > {REQUIREMENTS_TXT_PATH}
     """
@@ -70,6 +70,7 @@ def make(target: Path, dependencies: List[Path], command: Callable):
 
 
 def run(commands):
+    result = ""
     for command in [command.strip() for command in commands.strip().split("\n")]:
         echo("\n" + command)
         result = subprocess.run(command, shell=True)

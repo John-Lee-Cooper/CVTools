@@ -4,8 +4,6 @@
 Display all images in paths
 """
 
-import ui
-from pathlib import Path
 from type_ext import Tuple, List, FilePath, Image
 from image_paths import images_in_paths, imread
 from ring_buffer import RingBuffer
@@ -20,7 +18,7 @@ class ImageRing:
             first_image = image_paths_[0]
             image_paths_ = images_in_paths([first_image.parent], subdirectories)
         if len(image_paths_) == 0:
-            exit()
+            exit()  # TODO: Error
         self._ring = RingBuffer(image_paths_, first_image)
         self._image_path = None
         self._image = None

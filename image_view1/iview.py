@@ -11,7 +11,6 @@ TODO:
 """
 
 import sys
-import cv2 as cv
 
 from window import Window
 from paths import trash
@@ -30,10 +29,12 @@ class App:
 
         screen_w, screen_h = screen_size()
         self.image_source = ImageRing(paths, subdirectories)
-        self.part_screen = FitCanvas(640, 480, enabled=True)
+        self.part_screen = FitCanvas(
+            config.WINDOW_WIDTH, config.WINDOW_HEIGHT, enabled=True
+        )
         self.full_screen = FitCanvas(screen_w, screen_h)
         self.overlay_help_text = OverlayText(
-            "", config.FONT_PATH, 18, enabled=False, v_pos="b", h_pos="c"
+            "", config.FONT_PATH, config.FONT_SIZE, enabled=False, v_pos="b", h_pos="c"
         )
 
         self.keys = k.KeyAssignments()

@@ -1,3 +1,7 @@
+"""
+Commonly used colors
+"""
+
 # https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors
 
 black = (0, 0, 0)

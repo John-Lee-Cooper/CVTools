@@ -3,7 +3,7 @@ Provide key constants for each platform
 """
 
 from sys import platform
-from typing import Optional, Callable
+from typing import Callable
 
 import ui
 

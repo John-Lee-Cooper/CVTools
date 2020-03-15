@@ -16,9 +16,9 @@ venv:requirements
 	make clean; \
 	python3 -m venv venv; \
 	source venv/bin/activate; \
-	pip install --upgrade pip; \
-	pip install -r requirements;
-	pip freeze > requirements.txt;
+	python3 -m pip install --upgrade pip setuptools; \
+	python3 -m pip install -r requirements;
+	python3 -m pip freeze > requirements.txt;
 
 exe:venv
 	-@rm -rf build dist setup.py

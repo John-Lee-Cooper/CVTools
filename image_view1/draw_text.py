@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 """
+Functions and class for drawing text on Image
+
 https://stackoverflow.com/questions/47726854/error-module-object-has-no-attribute-freetype
 """
 
@@ -29,7 +31,7 @@ def put_text(
     y: int = 0,
 ):
     w, h, _ = ImageFont.getsize(text, font)
-    sub = np.s_[y : y + h, x : x + w, :]
+    sub = np.s_[y:y + h, x:x + w, :]
 
     pil_image = Image.fromarray(image[sub])
     draw = ImageDraw.Draw(pil_image)
@@ -104,7 +106,7 @@ class OverlayText(ImageProcessor):
             y = self.y
 
         if bg_color:
-            sub = np.s_[y : y + height, x : x + width, :]
+            sub = np.s_[y:y + height, x:x + width, :]
             overlay = np.full((height, width, depth), bg_color, dtype=np.uint8)
             image[sub] = cv.addWeighted(overlay, alpha, image[sub], 1 - alpha, 0)
 

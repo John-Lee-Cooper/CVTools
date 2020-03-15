@@ -1,9 +1,15 @@
+"""
+Image processor for adding images to groups
+"""
+
 import config
-from type_ext import Optional, PosixPath
+from type_ext import Optional, PosixPath, Image
 import cv2 as cv
 
+from image_processor import ImageProcessor
 
-class Group:
+
+class Group(ImageProcessor):
     """
     TODO
     """
@@ -11,8 +17,8 @@ class Group:
     def __init__(
         self,
         path: Optional[PosixPath] = None,
-        color=(0, 255, 0),
-        size=10,
+        color: Color = (0, 255, 0),
+        size: int = 10,
     ):
         self.path = path or config.FAVORITES_PATH
         self.color = color
@@ -22,20 +28,22 @@ class Group:
         self._items = set()
         self.read()
 
-    # def __contains__(self, item):
-    #     return item in self._items
-
-    def mark(self, image, item):
+    def __call__(self, image, item):
         self.item = item
         if item in self._items:
-            self.draw(image, 10, 10)
+            self._draw(image, 10, 10)
         return image
 
     # TODO pass symbol as argument to Group
-    def draw(self, image, x, y):
+    def _draw(
+        self,
+        image: Image,
+        x: int,
+        y: int
+    ) -> None:
         cv.rectangle(image, (x, y), (x + self.size, y + self.size), self.color, -1)
 
-    def toggle(self):
+    def toggle(self) -> None:
         if self.item in self._items:
             self._items.remove(self.item)
         else:

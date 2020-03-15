@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 """
-Window class
+OpenCV Window class
 """
-import sys
+
 from pathlib import Path, PosixPath
 import cv2 as cv
 from paths import script_name
@@ -51,7 +51,9 @@ class Window:
 
     @staticmethod
     def make_name(name: FilePath) -> Optional[PosixPath]:
-        """ If name is a PosixPath, return its name, else assume its a string and return it """
+        """
+        If name is a PosixPath, return its name, else assume its a string and return it
+        """
         return Path(name).name if isinstance(name, PosixPath) else name
 
     def set_title(self, title: FilePath, include_script_name: bool = True) -> None:
@@ -100,6 +102,6 @@ class Window:
         # = cv.waitKeyEx(int(wait_ms))
 
         if key_code & 0xFF == keys.ESCAPE:
-            sys.exit(0)
+            exit(0)
 
         return key_code

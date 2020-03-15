@@ -31,7 +31,9 @@ def image_paths(directory_path: str = ".", pattern: str = "*") -> List[PosixPath
 def images_in_paths(
     paths: List[FilePath], subdirectories: bool = False
 ) -> List[FilePath]:
-    """ Return a RingBuffer of image Paths given a list of file and/or directory Paths """
+    """
+    Return a RingBuffer of image Paths given a list of file and/or directory Paths
+    """
 
     pattern = "**/*" if subdirectories else "*"
 

@@ -1,5 +1,5 @@
 """
-Generic Circular buffer
+Generic circular buffer
 """
 
 from typing import Sequence, Any, Iterator, Union

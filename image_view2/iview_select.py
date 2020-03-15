@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 """
-Display all images in paths
+Extension to iview to allow selecting of images.
 
 TODO:
   Multiple groups
+  Save groups in json.  Config?
 """
 
-from type_ext import List, FilePath
 import config
+from type_ext import List, FilePath
 from iview import App
-from group import Group  # NEW
+from group import Group
 
 
 class IViewSelect(App):
@@ -36,7 +37,7 @@ class IViewSelect(App):
         image = self.full_screen(image)
         image = self.overlay_help_text(image)
 
-        image = self.group.mark(image, str(image_source.path))  # NEW
+        image = self.group(image, str(image_source.path))  # NEW
 
         key = self.window.display(image, title=image_source.path, wait_ms=0)
         self.keys.handle_keystroke(key)

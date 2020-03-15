@@ -21,7 +21,6 @@ def trash(path: FilePath) -> None:
     """
     src_path = Path(path)
     dst_path = config.TRASH_PATH / src_path.name
-    print(src_path, dst_path)
 
     # Ensure we are not overwriting anything in trash
     count = 1
@@ -37,7 +36,7 @@ def file_paths(
 ) -> List[PosixPath]:
     """
     Yield the next path in directory_path that matches the pattern and
-    if specified, has a suffic contained in valid_exts
+    if specified, has a suffix contained in valid_exts
     """
     directory_path = Path(directory_path)
     assert directory_path.is_dir()

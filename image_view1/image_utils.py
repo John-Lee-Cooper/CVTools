@@ -28,27 +28,22 @@ else:
         from pymouse import PyMouse
 
         # from pykeyboard import PyKeyboard
+
         screen_w, screen_h = PyMouse().screen_size()
         return int(screen_w), int(screen_h)
-
-
-"""
-    import pyautogui
-    screen_w, screen_h = pyautogui.size()
-"""
 
 
 class FitCanvas(ImageProcessor):
     """ Resize image to fit canvas without changing aspect ratio """
 
     def __init__(
-            self,
-            width: int,
-            height: int,
-            interpolation: int = cv.INTER_CUBIC,
-            enabled: bool = False,
-            matte_color: Optional[Tuple] = config.MATTE_COLOR,
-            matte_size: int = config.MATTE_SIZE,
+        self,
+        width: int,
+        height: int,
+        interpolation: int = cv.INTER_CUBIC,
+        enabled: bool = False,
+        matte_color: Optional[Tuple] = config.MATTE_COLOR,
+        matte_size: int = config.MATTE_SIZE,
     ):
         super().__init__(enabled)
 
@@ -75,7 +70,9 @@ class FitCanvas(ImageProcessor):
         scaled_height = int(h * scale_factor)
 
         if self.matte_color is None:
-            return cv.resize(image, (scaled_width, scaled_height), interpolation=self.interpolation)
+            return cv.resize(
+                image, (scaled_width, scaled_height), interpolation=self.interpolation
+            )
 
         scaled_width = min(scaled_width, width - self.matte_size)
         scaled_height = min(scaled_height, height - self.matte_size)

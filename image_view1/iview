@@ -4,18 +4,17 @@
 iview cli
 """
 
-from typing import List
 from pathlib import Path
-import typer
+from type_ext import List, FilePath
 import util
 import iview
 
 
 def main(
-    paths: List[Path],
+    paths: List[FilePath],
     recursive: bool = typer.Option(False, "--recursive", "-r",
                                    help="Traverse subdirectories of directories included in PATHS"),
-):
+) -> None:
     """
     {app} - a digital photo viewer
 

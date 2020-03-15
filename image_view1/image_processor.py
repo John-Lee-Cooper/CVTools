@@ -1,5 +1,5 @@
 """
-TODO
+Abstract image processor class
 """
 
 from abc import abstractmethod
@@ -17,6 +17,6 @@ class ImageProcessor:
         self.enabled = not self.enabled
 
     @abstractmethod
-    def __call__(self, image: Image) -> Image:
+    def __call__(self, image: Image, *args) -> Image:
         """ if enabled apply processing """
         pass
