@@ -7,7 +7,7 @@ import numpy as np
 import cv2 as cv
 import ui
 from paths import file_paths
-from type_ext import FilePath, Image, Optional, List
+from type_ext import FilePath, Image, Optional, List, Sequence
 
 
 # imread supports
@@ -21,7 +21,7 @@ def is_image_path(path: PosixPath) -> bool:
     return path.is_file() and path.suffix.lower() in IMAGE_EXTS
 
 
-def image_paths(directory_path: str = ".", pattern: str = "*") -> List[PosixPath]:
+def image_paths(directory_path: FilePath = ".", pattern: str = "*") -> List[PosixPath]:
     """
     Return the paths to the images in directory_path that matches the pattern.
     """
@@ -30,7 +30,7 @@ def image_paths(directory_path: str = ".", pattern: str = "*") -> List[PosixPath
 
 def images_in_paths(
     paths: List[FilePath], subdirectories: bool = False
-) -> List[FilePath]:
+) -> Sequence[FilePath]:
     """
     Return a RingBuffer of image Paths given a list of file and/or directory Paths
     """

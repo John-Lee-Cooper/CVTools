@@ -26,7 +26,7 @@ def put_text(
     image: Image,
     text: str,
     font: ImageFont,
-    color_bgr: Color = (0, 0, 0),
+    fg_color: Color = (0, 0, 0),
     x: int = 0,
     y: int = 0,
 ):
@@ -35,7 +35,7 @@ def put_text(
 
     pil_image = Image.fromarray(image[sub])
     draw = ImageDraw.Draw(pil_image)
-    draw.text((0, 0), text, fill=color_bgr, font=font)
+    draw.text((0, 0), text, fill=fg_color, font=font)
     image[sub] = cv.cvtColor(np.array(pil_image.getim()), cv.COLOR_RGB2BGR)
 
 
@@ -45,7 +45,7 @@ class OverlayText(ImageProcessor):
         text: str,
         font_path: FilePath,
         font_size: int,
-        color_bgr: Color = None,
+        fg_color: Color = None,
         bg_color: Color = None,
         x: int = 0,
         y: int = 0,
@@ -58,7 +58,7 @@ class OverlayText(ImageProcessor):
         self.font = make_font(font_path, font_size)
         self.enabled = enabled
         self.text = text
-        self.color_bgr = color_bgr
+        self.fg_color = fg_color
         self.bg_color = bg_color
         self.x = x
         self.y = y
@@ -72,7 +72,7 @@ class OverlayText(ImageProcessor):
     def draw_text(
         self,
         image: Image,
-        color_bgr: Color = (0, 0, 0),
+        fg_color: Color = (0, 0, 0),
         alpha: float = 0.7,
         bg_color: Optional[Color] = None,
     ) -> None:
@@ -113,28 +113,29 @@ class OverlayText(ImageProcessor):
         x += self.pad
         y += self.pad
 
-        color_bgr = tuple(color_bgr)
+        fg_color = tuple(fg_color)
         for text, size in zip(lines, sizes):
             # TODO: Align text
             y += size[2]
-            put_text(image, text, self.font, color_bgr, x, y)
+            put_text(image, text, self.font, fg_color, x, y)
             y += size[1]
 
     def __call__(self, image: Image):
         if not self.enabled:
             return image
 
-        color_bgr = self.color_bgr
-        bg_color = self.bg_color
-
-        if bg_color is None:  # FIXME
+        if self.bg_color is None:
             average = tuple(image.mean(axis=(0, 1))[:3].astype(np.uint8))
             bg_color = average
+        else:
+            bg_color = self.bg_color
 
-        if color_bgr is None:  # FIXME
-            color_bgr = [0 if v > 128 else 255 for v in bg_color]
+        if self.fg_color is None:
+            fg_color = tuple([0 if v > 128 else 255 for v in bg_color])
+        else:
+            fg_color = self.fg_color
 
-        self.draw_text(image, color_bgr=color_bgr, bg_color=bg_color)
+        self.draw_text(image, fg_color=fg_color, bg_color=bg_color)
 
         return image
 

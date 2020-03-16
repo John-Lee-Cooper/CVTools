@@ -2,10 +2,10 @@
 Define commonly used types for type hinting
 """
 
-from typing import Union, Optional, List, Tuple
-from pathlib import PosixPath
+from typing import Union, Optional, List, Tuple, Sequence
+from pathlib import Path, PosixPath
 import numpy as np
 
-FilePath = Union[PosixPath, str]
-Color = Tuple[int, float, complex]
+FilePath = Union[Path, PosixPath, str]
+Color = Union[Tuple[int, ...], Tuple[float, ...]]
 Image = np.ndarray
