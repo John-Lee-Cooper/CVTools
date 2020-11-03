@@ -15,9 +15,5 @@ venv
 *.mov
 *.MOV
 *.avi
-alex
-inessa
-learnopencv
-queries
-dataset
 core
+.mypy_cache/

@@ -1,8 +1,0 @@
-typer
-freetype-py
-numpy
-opencv-contrib-python==4.1.2.30  #4.2.0.32 breaks
-opencv-python==4.1.2.30  #4.2.0.32 breaks
-PILasOPENCV
-PyUserInput
-py2app

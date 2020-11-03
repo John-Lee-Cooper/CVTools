@@ -8,10 +8,11 @@ from pathlib import Path
 from type_ext import List, FilePath
 import util
 import iview
+import typer
 
 
 def main(
-    paths: List[FilePath],
+    paths: List[Path],  # List[FilePath],
     recursive: bool = typer.Option(False, "--recursive", "-r",
                                    help="Traverse subdirectories of directories included in PATHS"),
 ) -> None:
