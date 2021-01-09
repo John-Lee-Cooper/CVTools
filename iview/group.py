@@ -2,9 +2,8 @@
 Image processor for adding images to groups
 """
 
-import cv2 as cv
-
 import config
+import cv2 as cv
 from image_processor import ImageProcessor
 from type_ext import Color, Image, Optional, PosixPath
 

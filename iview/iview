@@ -5,10 +5,12 @@ iview cli
 """
 
 from pathlib import Path
-from type_ext import List, FilePath
-import util
-import iview
+
 import typer
+import util
+from type_ext import FilePath, List
+
+import iview
 
 
 def main(

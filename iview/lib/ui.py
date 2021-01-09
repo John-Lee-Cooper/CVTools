@@ -14,7 +14,7 @@ except ModuleNotFoundError:
     CLICK_INSTALLED = False
     print("import click failed")
 
-import config
+from lib import config
 
 
 def error(message: str, exit_code: int = 1) -> None:

@@ -7,7 +7,7 @@ Display all images in paths
 import sys
 
 from image_paths import images_in_paths, imread
-from ring_buffer import RingBuffer
+from lib.ring_buffer import RingBuffer
 from type_ext import FilePath, Image, List, Tuple
 
 

@@ -4,10 +4,9 @@ Support manipulating numpy/open_cv images
 
 import platform
 
+import config
 import cv2 as cv
 import numpy as np
-
-import config
 from image_processor import ImageProcessor
 from type_ext import Image, Optional, Tuple
 

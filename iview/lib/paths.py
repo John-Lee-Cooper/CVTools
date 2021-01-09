@@ -5,7 +5,7 @@ Extensions to pathlib
 from pathlib import Path
 from sys import argv
 
-import config
+from lib import config
 from type_ext import FilePath, List, Optional, PosixPath
 
 
