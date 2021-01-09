@@ -8,10 +8,11 @@ TODO:
   Save groups in json.  Config?
 """
 
-import config
 from type_ext import List, FilePath
-from iview import App
 from group import Group
+import config
+
+from iview import App
 
 
 class IViewSelect(App):
@@ -21,9 +22,8 @@ class IViewSelect(App):
 
         super().__init__(paths)
         self.group = Group()
-        self.keys.append(
-            "1", self.group.toggle, "to toggle membership in Group 1."
-        ),  # FIXME: insert before exit
+        # FIXME: insert before exit
+        self.keys.append("1", self.group.toggle, "to toggle membership in Group 1.")
 
     def process(self, image_source) -> None:
         """

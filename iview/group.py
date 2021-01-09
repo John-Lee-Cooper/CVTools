@@ -3,10 +3,10 @@ Image processor for adding images to groups
 """
 
 import config
-from type_ext import Optional, PosixPath, Image
 import cv2 as cv
 
 from image_processor import ImageProcessor
+from type_ext import Optional, PosixPath, Image, Color
 
 
 class Group(ImageProcessor):
@@ -20,6 +20,8 @@ class Group(ImageProcessor):
         color: Color = (0, 255, 0),
         size: int = 10,
     ):
+        super().__init__(True)
+
         self.path = path or config.FAVORITES_PATH
         self.color = color
         self.size = size
@@ -28,19 +30,14 @@ class Group(ImageProcessor):
         self._items = set()
         self.read()
 
-    def __call__(self, image, item):
+    def __call__(self, image, item, *args):
         self.item = item
         if item in self._items:
             self._draw(image, 10, 10)
         return image
 
     # TODO pass symbol as argument to Group
-    def _draw(
-        self,
-        image: Image,
-        x: int,
-        y: int
-    ) -> None:
+    def _draw(self, image: Image, x: int, y: int) -> None:
         cv.rectangle(image, (x, y), (x + self.size, y + self.size), self.color, -1)
 
     def toggle(self) -> None:

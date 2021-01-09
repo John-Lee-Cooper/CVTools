@@ -38,7 +38,7 @@ class RingBuffer:
 
     def __next__(self):
         if not self._list:
-            return  # stops iteration
+            raise StopIteration()
 
         self._index = (self._index + self._step) % len(self._list)
         return self._list[self._index]

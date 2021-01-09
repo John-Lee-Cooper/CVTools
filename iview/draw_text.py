@@ -8,14 +8,14 @@ https://stackoverflow.com/questions/47726854/error-module-object-has-no-attribut
 
 import cv2 as cv
 import numpy as np
-import PILasOPENCV as ImageFont
-import PILasOPENCV as Image
-import PILasOPENCV as ImageDraw
+import PILasOPENCV
 
 from image_processor import ImageProcessor
 from type_ext import FilePath, Color, Optional
 from window import Window
 import color
+
+ImageFont = Image = ImageDraw = PILasOPENCV
 
 
 def make_font(font_path: FilePath, font_height: int) -> ImageFont:
@@ -31,7 +31,7 @@ def put_text(
     y: int = 0,
 ):
     w, h, _ = ImageFont.getsize(text, font)
-    sub = np.s_[y:y + h, x:x + w, :]
+    sub = np.s_[y : y + h, x : x + w, :]
 
     pil_image = Image.fromarray(image[sub])
     draw = ImageDraw.Draw(pil_image)
@@ -106,7 +106,7 @@ class OverlayText(ImageProcessor):
             y = self.y
 
         if bg_color:
-            sub = np.s_[y:y + height, x:x + width, :]
+            sub = np.s_[y : y + height, x : x + width, :]
             overlay = np.full((height, width, depth), bg_color, dtype=np.uint8)
             image[sub] = cv.addWeighted(overlay, alpha, image[sub], 1 - alpha, 0)
 
@@ -120,7 +120,7 @@ class OverlayText(ImageProcessor):
             put_text(image, text, self.font, fg_color, x, y)
             y += size[1]
 
-    def __call__(self, image: Image):
+    def __call__(self, image: Image, *args):
         if not self.enabled:
             return image
 

@@ -4,6 +4,8 @@
 Provide functions to write info, warning and error messages to the console.
 """
 
+import sys
+
 try:  # Trying to find module on sys.path
     from click import secho
 
@@ -21,7 +23,7 @@ def error(message: str, exit_code: int = 1) -> None:
         secho(message, **config.ERROR_STYLE)
     else:
         print(message)
-    exit(exit_code)
+    sys.exit(exit_code)
 
 
 def warning(message: str) -> None:

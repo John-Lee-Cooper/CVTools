@@ -38,13 +38,13 @@ class App:
         )
 
         self.keys = k.KeyAssignments()
-        self.keys.append(k.SPACE, self.image_source.next, "to go to the next image."),
+        self.keys.append(k.SPACE, self.image_source.next, "to go to the next image.")
         self.keys.append(
             k.BACKSPACE, self.image_source.prev, "to go to the previous image."
-        ),
-        self.keys.append(k.DELETE, self.delete, "to delete the current image."),
-        self.keys.append(k.ENTER, self.fullscreen, "to toggle full screen."),
-        self.keys.append(k.ESCAPE, sys.exit, "to exit."),
+        )
+        self.keys.append(k.DELETE, self.delete, "to delete the current image.")
+        self.keys.append(k.ENTER, self.fullscreen, "to toggle full screen.")
+        self.keys.append(k.ESCAPE, sys.exit, "to exit.")
 
         self.keys.default_handler = self.overlay_help_text.toggle_enabled
 

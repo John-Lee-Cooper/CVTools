@@ -4,6 +4,7 @@
 OpenCV Window class
 """
 
+import sys
 from pathlib import Path, PosixPath
 import cv2 as cv
 from paths import script_name
@@ -73,7 +74,7 @@ class Window:
 
     def toggle_fullscreen(self):
         value = cv.getWindowProperty(self.name, cv.WND_PROP_FULLSCREEN)
-        cv.setWindowProperty(self.name, cv.WND_PROP_FULLSCREEN, not value)
+        cv.setWindowProperty(self.name, cv.WND_PROP_FULLSCREEN, float(not value))
 
     def display(
         self, image: Image, wait_ms: int = None, title: Optional[FilePath] = None
@@ -102,6 +103,6 @@ class Window:
         # = cv.waitKeyEx(int(wait_ms))
 
         if key_code & 0xFF == keys.ESCAPE:
-            exit(0)
+            sys.exit(0)
 
         return key_code

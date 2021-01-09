@@ -14,7 +14,7 @@ import config
 if platform.system() == "Windows":
 
     def screen_size() -> Tuple[int, int]:
-        import ctypes
+        import ctypes  # pylint: disable=import-outside-toplevel
 
         user32 = ctypes.windll.user32
         # screen_w, screen_h = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
@@ -25,7 +25,7 @@ if platform.system() == "Windows":
 else:
 
     def screen_size() -> Tuple[int, int]:
-        from pymouse import PyMouse
+        from pymouse import PyMouse  # pylint: disable=import-outside-toplevel
 
         # from pykeyboard import PyKeyboard
 
@@ -52,7 +52,7 @@ class FitCanvas(ImageProcessor):
         self.matte_color = matte_color
         self.matte_size = matte_size
 
-    def __call__(self, image: Image) -> Image:
+    def __call__(self, image: Image, *args) -> Image:
         """
         Return image of size height, width.
         The input image is scaled using interpolation.

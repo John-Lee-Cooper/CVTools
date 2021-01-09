@@ -19,4 +19,3 @@ class ImageProcessor:
     @abstractmethod
     def __call__(self, image: Image, *args) -> Image:
         """ if enabled apply processing """
-        pass
