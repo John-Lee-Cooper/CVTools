@@ -10,10 +10,10 @@ import cv2 as cv
 import numpy as np
 import PILasOPENCV
 
-from image_processor import ImageProcessor
-from type_ext import FilePath, Color, Optional
-from window import Window
 import color
+from image_processor import ImageProcessor
+from type_ext import Color, FilePath, Optional
+from window import Window
 
 ImageFont = Image = ImageDraw = PILasOPENCV
 

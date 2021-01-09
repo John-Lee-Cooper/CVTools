@@ -7,7 +7,6 @@ from typing import Callable
 
 import ui
 
-
 ESCAPE = 27
 SPACE = 32
 BACKSPACE = 8

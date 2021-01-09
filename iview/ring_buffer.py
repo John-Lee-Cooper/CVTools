@@ -2,7 +2,7 @@
 Generic circular buffer
 """
 
-from typing import Sequence, Any, Iterator, Union
+from typing import Any, Iterator, Sequence, Union
 
 
 class RingBuffer:

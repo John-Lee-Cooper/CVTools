@@ -12,14 +12,14 @@ TODO:
 
 import sys
 
-from window import Window
-from paths import trash
-from type_ext import List, FilePath
-from image_ring import ImageRing
-from image_utils import FitCanvas, screen_size
-from draw_text import OverlayText
 import config
 import keys as k
+from draw_text import OverlayText
+from image_ring import ImageRing
+from image_utils import FitCanvas, screen_size
+from paths import trash
+from type_ext import FilePath, List
+from window import Window
 
 
 class App:

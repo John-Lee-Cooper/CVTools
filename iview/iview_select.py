@@ -8,11 +8,10 @@ TODO:
   Save groups in json.  Config?
 """
 
-from type_ext import List, FilePath
-from group import Group
 import config
-
+from group import Group
 from iview import App
+from type_ext import FilePath, List
 
 
 class IViewSelect(App):

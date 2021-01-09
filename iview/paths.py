@@ -2,10 +2,11 @@
 Extensions to pathlib
 """
 
-from sys import argv
 from pathlib import Path
+from sys import argv
+
 import config
-from type_ext import FilePath, Optional, List, PosixPath
+from type_ext import FilePath, List, Optional, PosixPath
 
 
 def script_name() -> str:

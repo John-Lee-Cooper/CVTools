@@ -3,6 +3,7 @@ App Configuration
 """
 
 from pathlib import Path
+
 import color
 
 # Paths

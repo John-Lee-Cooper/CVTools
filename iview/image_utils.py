@@ -3,13 +3,13 @@ Support manipulating numpy/open_cv images
 """
 
 import platform
-import numpy as np
+
 import cv2 as cv
+import numpy as np
 
-from image_processor import ImageProcessor
-from type_ext import Image, Tuple, Optional
 import config
-
+from image_processor import ImageProcessor
+from type_ext import Image, Optional, Tuple
 
 if platform.system() == "Windows":
 

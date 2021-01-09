@@ -3,12 +3,13 @@ Functions to support image and video paths
 """
 
 from pathlib import Path, PosixPath
-import numpy as np
+
 import cv2 as cv
+import numpy as np
+
 import ui
 from paths import file_paths
-from type_ext import FilePath, Image, Optional, List, Sequence
-
+from type_ext import FilePath, Image, List, Optional, Sequence
 
 # imread supports
 IMAGE_EXTS = (

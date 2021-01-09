@@ -2,11 +2,11 @@
 Image processor for adding images to groups
 """
 
-import config
 import cv2 as cv
 
+import config
 from image_processor import ImageProcessor
-from type_ext import Optional, PosixPath, Image, Color
+from type_ext import Color, Image, Optional, PosixPath
 
 
 class Group(ImageProcessor):

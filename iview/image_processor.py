@@ -3,6 +3,7 @@ Abstract image processor class
 """
 
 from abc import abstractmethod
+
 from type_ext import Image
 
 

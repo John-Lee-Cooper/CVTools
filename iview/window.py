@@ -6,10 +6,12 @@ OpenCV Window class
 
 import sys
 from pathlib import Path, PosixPath
+
 import cv2 as cv
+
+import keys
 from paths import script_name
 from type_ext import FilePath, Image, Optional
-import keys
 
 
 class Window:
