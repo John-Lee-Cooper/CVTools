@@ -6,9 +6,10 @@ from pathlib import Path, PosixPath
 
 import cv2 as cv
 import numpy as np
-from lib import ui
-from lib.paths import file_paths
-from type_ext import FilePath, Image, List, Optional, Sequence
+
+from iview import ui
+from iview.paths import file_paths
+from iview.type_ext import FilePath, Image, List, Optional, Sequence
 
 # imread supports
 IMAGE_EXTS = (

@@ -6,9 +6,9 @@ Display all images in paths
 
 import sys
 
-from image_paths import images_in_paths, imread
+from iview.image_paths import images_in_paths, imread
+from iview.type_ext import FilePath, Image, List, Tuple
 from lib.ring_buffer import RingBuffer
-from type_ext import FilePath, Image, List, Tuple
 
 
 class ImageRing:

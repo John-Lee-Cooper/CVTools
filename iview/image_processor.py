@@ -4,7 +4,7 @@ Abstract image processor class
 
 from abc import abstractmethod
 
-from type_ext import Image
+from iview.type_ext import Image
 
 
 class ImageProcessor:

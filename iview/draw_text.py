@@ -6,13 +6,14 @@ Functions and class for drawing text on Image
 https://stackoverflow.com/questions/47726854/error-module-object-has-no-attribute-freetype
 """
 
-import color
 import cv2 as cv
 import numpy as np
 import PILasOPENCV
-from image_processor import ImageProcessor
-from type_ext import Color, FilePath, Optional
-from window import Window
+
+from iview import color
+from iview.image_processor import ImageProcessor
+from iview.type_ext import Color, FilePath, Optional
+from iview.window import Window
 
 ImageFont = Image = ImageDraw = PILasOPENCV
 

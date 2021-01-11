@@ -8,9 +8,10 @@ import sys
 from pathlib import Path, PosixPath
 
 import cv2 as cv
-import keys
-from lib.paths import script_name
-from type_ext import FilePath, Image, Optional
+
+from iview import keys
+from iview.paths import script_name
+from iview.type_ext import FilePath, Image, Optional
 
 
 class Window:

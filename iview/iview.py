@@ -11,15 +11,19 @@ TODO:
 """
 
 import sys
+from pathlib import Path
 
-import lib.keys as k
-from draw_text import OverlayText
-from image_ring import ImageRing
-from image_utils import FitCanvas, screen_size
-from lib import config
-from lib.paths import trash
-from type_ext import FilePath, List
-from window import Window
+import typer
+
+from iview import config
+from iview import keys as k
+from iview import util
+from iview.draw_text import OverlayText
+from iview.image_ring import ImageRing
+from iview.image_utils import FitCanvas, screen_size
+from iview.paths import trash
+from iview.type_ext import FilePath, List
+from iview.window import Window
 
 
 class App:
@@ -81,5 +85,52 @@ class App:
         self.keys.handle_keystroke(key)
 
 
+def run(
+    paths: List[Path],  # List[FilePath],
+    recursive: bool = typer.Option(
+        False,
+        "--recursive",
+        "-r",
+        help="Traverse subdirectories of directories included in PATHS",
+    ),
+) -> None:
+    """
+    {app} - a digital photo viewer
+
+    \b
+    {app} allows you to step forward or backward though all the images
+    and/or image directories specified in the arguments.
+
+    {app} displays the image specified by PATHS.
+    PATHS is a list of image paths or a directory containing images.
+
+    \b
+    Press
+      <SPACE>     to go to the next image.
+      <BACKSPACE> to go to the previous image.
+      <DELETE>    to delete the current image.
+      <ESCAPE>    to exit.
+    """
+
+    App(paths, subdirectories=recursive).run()
+
+
+def main() -> None:
+    """Call the app command run """
+
+    util.update_docstring(main, app=Path(__file__).name)
+    typer.run(run)
+    # app = typer.Typer(add_completion=False)
+    # app.command()(run)
+    # app()
+
+
 if __name__ == "__main__":
-    App([config.DATA_PATH / "lena.jpg"]).run()
+    main()
+
+"""
+if __name__ == "__main__":
+    #App([config.DATA_PATH / "lena.jpg"]).run()
+    util.update_docstring(main, app=Path(__file__).name)
+    typer.run(main)
+"""

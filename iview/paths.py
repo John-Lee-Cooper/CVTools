@@ -5,8 +5,8 @@ Extensions to pathlib
 from pathlib import Path
 from sys import argv
 
-from lib import config
-from type_ext import FilePath, List, Optional, PosixPath
+from iview import config
+from iview.type_ext import FilePath, List, Optional, PosixPath
 
 
 def script_name() -> str:

@@ -4,7 +4,8 @@ App Configuration
 
 from pathlib import Path
 
-from lib import color
+# from lib import color
+from iview import color
 
 # Paths
 ROOT_PATH = Path("~/python/cv/cv_tools").expanduser()

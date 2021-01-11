@@ -4,11 +4,12 @@ Support manipulating numpy/open_cv images
 
 import platform
 
-import config
 import cv2 as cv
 import numpy as np
-from image_processor import ImageProcessor
-from type_ext import Image, Optional, Tuple
+
+from iview import config
+from iview.image_processor import ImageProcessor
+from iview.type_ext import Image, Optional, Tuple
 
 if platform.system() == "Windows":
 

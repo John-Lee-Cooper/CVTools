@@ -5,7 +5,7 @@ Provide key constants for each platform
 from sys import platform
 from typing import Callable
 
-from lib import ui
+from iview import ui
 
 ESCAPE = 27
 SPACE = 32
