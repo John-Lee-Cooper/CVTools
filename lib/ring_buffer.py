@@ -55,12 +55,12 @@ class RingBuffer:
             raise StopIteration
         return self._list[self._index]
 
-    def next(self) -> Any:
+    def next_(self) -> Any:
         """ Advance ringbuffer index forward """
         self._index = (self._index + 1) % len(self._list)
         return self._list[self._index]
 
-    def prev(self) -> Any:
+    def prev_(self) -> Any:
         """ Advance ringbuffer index backward """
         self._index = (self._index - 1) % len(self._list)
         return self._list[self._index]

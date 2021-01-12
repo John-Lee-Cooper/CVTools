@@ -38,11 +38,11 @@ class ImageRing:
         self._image = imread(self._image_path)
 
     def next(self) -> None:
-        self._ring.next()
+        self._ring.next_()
         self._fetch()
 
     def prev(self) -> None:
-        self._ring.prev()
+        self._ring.prev_()
         self._fetch()
 
     def pop(self) -> None:

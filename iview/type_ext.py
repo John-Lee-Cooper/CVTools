@@ -3,10 +3,10 @@ Define commonly used types for type hinting
 """
 
 from pathlib import Path, PosixPath
-from typing import (
+from typing import (  # pylint: disable=unused-import
     List,
     Optional,
-    Sequence,  # pylint: disable=unused-import
+    Sequence,
     Tuple,
     Union,
 )

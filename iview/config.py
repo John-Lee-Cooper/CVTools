@@ -4,11 +4,10 @@ App Configuration
 
 from pathlib import Path
 
-# from lib import color
 from iview import color
 
 # Paths
-ROOT_PATH = Path("~/python/cv/cv_tools").expanduser()
+ROOT_PATH = Path(__file__).parent.parent
 DATA_PATH = ROOT_PATH / "data/"
 TRASH_PATH = DATA_PATH / "trash/"
 FAVORITES_PATH = ROOT_PATH / "favorites.txt"
