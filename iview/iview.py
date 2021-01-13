@@ -17,13 +17,14 @@ import typer
 
 from iview import config
 from iview import keys as k
-from iview import util
 from iview.draw_text import OverlayText
 from iview.image_ring import ImageRing
 from iview.image_utils import FitCanvas, screen_size
-from iview.paths import trash
+from iview.paths import trash, script_name
 from iview.type_ext import FilePath, List
 from iview.window import Window
+from lib.cli import run as typer_run
+from lib.util import update_docstring
 
 
 class App:
@@ -60,10 +61,12 @@ class App:
         self.part_screen.toggle_enabled()
 
     def delete(self) -> None:
+        """ TODO """
         trash(self.image_source.path)
         self.image_source.pop()
 
     def run(self) -> None:
+        """ TODO """
         self.overlay_help_text.set_text(self.keys.help_string())
         with Window() as self.window:
             while True:
@@ -118,19 +121,9 @@ def run(
 def main() -> None:
     """Call the app command run """
 
-    util.update_docstring(main, app=Path(__file__).name)
-    typer.run(run)
-    # app = typer.Typer(add_completion=False)
-    # app.command()(run)
-    # app()
+    update_docstring(run, app=script_name())
+    typer_run(run)
 
 
 if __name__ == "__main__":
     main()
-
-"""
-if __name__ == "__main__":
-    #App([config.DATA_PATH / "lena.jpg"]).run()
-    util.update_docstring(main, app=Path(__file__).name)
-    typer.run(main)
-"""
