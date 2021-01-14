@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 import io
-from pathlib import Path
 from collections import defaultdict
+from pathlib import Path
 from setuptools import setup, find_packages
-
 
 # The directory containing this file
 DIRECTORY = Path(__file__).parent
@@ -24,9 +23,7 @@ install_requires = [
 
 # Configure dependency links
 dependency_links = [
-    r.strip().replace("git+", "")
-    for r in requirements
-    if not ("git+" in r)
+    r.strip().replace("git+", "") for r in requirements if not ("git+" in r)
 ]
 
 data_files = defaultdict(list)
