@@ -3,8 +3,13 @@ Define commonly used types for type hinting
 """
 
 from pathlib import Path, PosixPath
-from typing import (List, Optional, Sequence,  # pylint: disable=unused-import
-                    Tuple, Union)
+from typing import (  # pylint: disable=unused-import
+    List,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 import numpy as np
 

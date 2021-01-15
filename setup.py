@@ -46,7 +46,7 @@ setup(
     python_requires=">=3.6",
     entry_points="""
         [console_scripts]
-        iview=iview.iview:main
+        iview=iview.__main__:main
     """,
     long_description=README,
     long_description_content_type="text/markdown",

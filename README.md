@@ -47,6 +47,10 @@ Rolling the mouse wheel up and down will zoom out and in where the mouse is.
 
 ## Todo
 
+* Display image name, size, location, date taken
+* Transition
+* Crop
+
 ## Written by
 
 John Lee Cooper  

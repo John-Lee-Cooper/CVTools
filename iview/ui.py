@@ -8,6 +8,7 @@ import sys
 
 try:  # Trying to find module on sys.path
     from click import secho
+
     CLICK_INSTALLED = True
 except ModuleNotFoundError:
     CLICK_INSTALLED = False
@@ -21,23 +22,22 @@ def _echo(message: str, style) -> None:
         secho(message, style)
     else:
         print(message)
-    sys.exit(exit_code)
 
 
 def error(message: str, exit_code: int = 1) -> None:
     """ Notify user of a fatal error and exit with error_code """
-    _echo(message, **config.ERROR_STYLE)
+    _echo(message, config.ERROR_STYLE)
     sys.exit(exit_code)
 
 
 def warning(message: str) -> None:
     """ Notify user something has gone wrong """
-    _echo(message, **config.WARNING_STYLE)
+    _echo(message, config.WARNING_STYLE)
 
 
 def info(message: str) -> None:
     """ Notify user message"""
-    _echo(message, **config.INFO_STYLE)
+    _echo(message, config.INFO_STYLE)
 
 
 if __name__ == "__main__":

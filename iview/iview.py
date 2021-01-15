@@ -4,27 +4,19 @@
 Display all images in paths
 
 TODO:
-  Display filename and size
-  Output class
-  Play mode
-  Transition
+
 """
 
 import sys
-from pathlib import Path
-
-import typer
 
 from iview import config
 from iview import keys as k
 from iview.draw_text import OverlayText
 from iview.image_ring import ImageRing
 from iview.image_utils import FitCanvas, screen_size
-from iview.paths import trash, script_name
+from iview.paths import trash
 from iview.type_ext import FilePath, List
 from iview.window import Window
-from lib.cli import run as typer_run
-from lib.util import update_docstring
 
 
 class App:
@@ -88,42 +80,7 @@ class App:
         self.keys.handle_keystroke(key)
 
 
-def run(
-    paths: List[Path],  # List[FilePath],
-    recursive: bool = typer.Option(
-        False,
-        "--recursive",
-        "-r",
-        help="Traverse subdirectories of directories included in PATHS",
-    ),
-) -> None:
-    """
-    {app} - a digital photo viewer
-
-    \b
-    {app} allows you to step forward or backward though all the images
-    and/or image directories specified in the arguments.
-
-    {app} displays the image specified by PATHS.
-    PATHS is a list of image paths or a directory containing images.
-
-    \b
-    Press
-      <SPACE>     to go to the next image.
-      <BACKSPACE> to go to the previous image.
-      <DELETE>    to delete the current image.
-      <ESCAPE>    to exit.
-    """
-
-    App(paths, subdirectories=recursive).run()
-
-
-def main() -> None:
-    """Call the app command run """
-
-    update_docstring(run, app=script_name())
-    typer_run(run)
-
-
+"""
 if __name__ == "__main__":
-    main()
+    App(paths, subdirectories=recursive).run()
+"""

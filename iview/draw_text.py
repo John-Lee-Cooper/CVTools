@@ -14,12 +14,17 @@ from iview import color
 from iview.image_processor import ImageProcessor
 from iview.type_ext import Color, FilePath, Optional
 from iview.window import Window
+from iview.ui import error
 
 ImageFont = Image = ImageDraw = PILasOPENCV
 
 
 def make_font(font_path: FilePath, font_height: int) -> ImageFont:
-    return ImageFont.truetype(str(font_path), font_height)
+    try:
+        font = ImageFont.truetype(str(font_path), font_height)
+    except IOError:
+        error(f"Cannot find font file {font_path}")
+    return font
 
 
 def put_text(
