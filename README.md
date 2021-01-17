@@ -1,22 +1,20 @@
-# iview Image Viewer
+# Image Viewer
 
-A command line app for viewing images.
-
-## How it works
+**iview** is a command line app for viewing images using open_cv.
 
 ## Installation
 
 ### Using Pip
 
 ```bash
-  $ pip install iview  (Not yet available)
+  $ pip install image_viewer
 ```
 
 ### Manual
 
 ```bash
-  $ git clone https://github.com/John-Lee-Cooper/image_viewer
-  $ cd image_viewer
+  $ git clone https://github.com/John-Lee-Cooper/image-viewer
+  $ cd image-viewer
   $ python setup.py install
 ```
 
@@ -28,8 +26,7 @@ $ iview --help
 $ iview -r ~/Pictures
 ```
 
-![iview](image/iview1.png)
-![iview](https://github.com/John-Lee-Cooper/image_viewer/raw/master/image/iview1.png)
+![iview](https://github.com/John-Lee-Cooper/image-viewer/raw/master/image/iview1.png)
 
 ### User Interface
 
@@ -47,9 +44,14 @@ Rolling the mouse wheel up and down will zoom out and in where the mouse is.
 
 ## Todo
 
+* UI error
+* Pan/zoom via keypad
+* Config dynamic singleton
+* Requirements linux vs mac
 * Display image name, size, location, date taken
-* Transition
 * Crop
+* Transition
+
 
 ## Written by
 

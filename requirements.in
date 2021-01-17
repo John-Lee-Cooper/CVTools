@@ -1,11 +1,9 @@
 typer
-freetype-py
 numpy
-opencv-contrib-python
 opencv-python
-PILasOPENCV
-PyUserInput
-py2app
+PILasOPENCV  # draw_text
+PyUserInput  # image_utils
 
-#opencv-contrib-python==4.1.2.30  #4.2.0.32 breaks
-#opencv-python==4.1.2.30  #4.2.0.32 breaks
+# opencv-contrib-python
+# freetype-py
+# py2app

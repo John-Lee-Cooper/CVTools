@@ -26,6 +26,8 @@ dependency_links = [
     r.strip().replace("git+", "") for r in requirements if not ("git+" in r)
 ]
 
+packages = find_packages(exclude=["tests"])
+
 data_files = defaultdict(list)
 for path in Path("data").rglob("*"):
     if path.is_file():
@@ -33,32 +35,26 @@ for path in Path("data").rglob("*"):
 data_files = list(data_files.items())
 
 setup(
-    name="image_viewer",
-    description="Description",
-    version="1.0",
-    # version="1.0.post7",
-    # keyword="open_cv",
-    # from setuptools import setup, find_packages
-    # packages=find_packages(exclude=["tests"]),
-    packages=["iview", "lib"],
-    data_files=data_files,
-    install_requires=install_requires,
-    python_requires=">=3.6",
-    entry_points="""
-        [console_scripts]
-        iview=iview.__main__:main
-    """,
+    name="image-viewer",
+    version="0.0.2",
+    description="iview is a command line app for viewing images using open_cv.",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/John-Lee-Cooper/iview",
-    download_url="https://github.com/John-Lee-Cooper/iview/archive/1.0.0.tar.gz",
+    keywords="open cv,click",
+    install_requires=install_requires,
     dependency_links=dependency_links,
+    packages=packages,
+    data_files=data_files,
+    python_requires=">=3.6",
+    entry_points=dict(console_scripts=["iview=iview.__main__:main"]),
+    url="https://github.com/John-Lee-Cooper/image-viewer/",
+    download_url="https://github.com/John-Lee-Cooper/image-viewer/archive/1.0.0.tar.gz",
     classifiers=[
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GPL License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
     ],
-    license="MIT",
+    license="GPL",
     author="John Lee Cooper",
     author_email="john.lee.cooper@gatech.edu",
 )

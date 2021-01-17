@@ -12,10 +12,9 @@ from iview.image_processor import ImageProcessor
 from iview.type_ext import Image, Optional, Tuple
 
 if platform.system() == "Windows":
+    import ctypes  # pylint: disable=import-outside-toplevel
 
     def screen_size() -> Tuple[int, int]:
-        import ctypes  # pylint: disable=import-outside-toplevel
-
         user32 = ctypes.windll.user32
         # screen_w, screen_h = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
         screen_w, screen_h = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
@@ -23,11 +22,11 @@ if platform.system() == "Windows":
 
 
 else:
+    # from pykeyboard import PyKeyboard
+    from pymouse import PyMouse  # pylint: disable=import-outside-toplevel
+
 
     def screen_size() -> Tuple[int, int]:
-        from pymouse import PyMouse  # pylint: disable=import-outside-toplevel
-
-        # from pykeyboard import PyKeyboard
 
         screen_w, screen_h = PyMouse().screen_size()
         return int(screen_w), int(screen_h)

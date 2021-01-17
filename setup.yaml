@@ -1,0 +1,13 @@
+repo_name: image-viewer
+version: 0.0.2
+module_name: iview
+entry_points: iview=iview.__main__:main
+
+description: iview is a command line app for viewing images using open_cv.
+keywords: open cv,click
+python_requires: 3.6
+license: GPL
+
+author: John Lee Cooper
+author_email: john.lee.cooper@gatech.edu
+repo_url: github.com/John-Lee-Cooper
