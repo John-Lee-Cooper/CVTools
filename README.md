@@ -44,7 +44,6 @@ Rolling the mouse wheel up and down will zoom out and in where the mouse is.
 
 ## Todo
 
-* UI error
 * Pan/zoom via keypad
 * Config dynamic singleton
 * Requirements linux vs mac

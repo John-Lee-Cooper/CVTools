@@ -55,7 +55,7 @@ def images_in_paths(
         if len(paths) == 0:
             ui.warning("images_in_paths(paths): paths is empty")
         else:
-            ui.warning(f"No images in {paths}")
+            ui.warning(f"No images in {'or '.join([str(path) for path in paths])}")
 
     return image_paths_
 
