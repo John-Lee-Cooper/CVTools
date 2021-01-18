@@ -1,38 +1,10 @@
 #!/usr/bin/env python
 
-import io
-from collections import defaultdict
+from setuptools import setup
 from pathlib import Path
-from setuptools import setup, find_packages
 
-# The directory containing this file
-DIRECTORY = Path(__file__).parent
-
-# The text of the README file
-README = (DIRECTORY / "README.md").read_text()
-
-# Automatically capture required modules in requirements.txt for install_requires
-with io.open(DIRECTORY / "requirements.txt", encoding="utf-8") as f:
-    requirements = f.read().split("\n")
-
-install_requires = [
-    r.strip()
-    for r in requirements
-    if not ("git+" in r or r.startswith("#") or r.startswith("-"))
-]
-
-# Configure dependency links
-dependency_links = [
-    r.strip().replace("git+", "") for r in requirements if not ("git+" in r)
-]
-
-packages = find_packages(exclude=["tests"])
-
-data_files = defaultdict(list)
-for path in Path("data").rglob("*"):
-    if path.is_file():
-        data_files[str(path.parent)].append(str(path))
-data_files = list(data_files.items())
+# The text of the README file in directory containing this file
+README = (Path(__file__).parent / "README.md").read_text()
 
 setup(
     name="image-viewer",
@@ -41,16 +13,16 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     keywords="open cv,click",
-    install_requires=install_requires,
-    dependency_links=dependency_links,
-    packages=packages,
-    data_files=data_files,
+    install_requires=['click==7.1.2', 'freetype-py==2.2.0', 'gif2numpy==1.3', 'kaitaistruct==0.9', 'mss==6.1.0', 'numpy2gif==1.0', 'numpy==1.19.4', 'opencv-python==4.4.0.46', 'pilasopencv==2.7', 'pyobjc-core==7.1', 'pyobjc-framework-cocoa==7.1', 'pyobjc-framework-quartz==7.1', 'pyuserinput==0.1.11', 'typer==0.3.2'],
+    # dependency_links="",
+    packages=['lib', 'iview'],
+    data_files=[('data/fonts', ['data/fonts/DroidSansMono.ttf'])],
     python_requires=">=3.6",
     entry_points=dict(console_scripts=["iview=iview.__main__:main"]),
     url="https://github.com/John-Lee-Cooper/image-viewer/",
     download_url="https://github.com/John-Lee-Cooper/image-viewer/archive/1.0.0.tar.gz",
     classifiers=[
-        "License :: OSI Approved :: GPL License",
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
     ],
