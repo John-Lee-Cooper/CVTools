@@ -12,6 +12,7 @@ import sys
 from iview import config
 from iview import keys as k
 from iview.draw_text import OverlayText
+from iview.group import Group  # GROUP
 from iview.image_ring import ImageRing
 from iview.image_utils import FitCanvas, screen_size
 from iview.paths import trash
@@ -47,6 +48,9 @@ class App:
 
         self.window = None
 
+        self.group = Group()  # GROUP
+        # self.keys.append("1", self.group.toggle, "to toggle membership in Group 1.")  # GROUP - insert before exit
+
     def fullscreen(self) -> None:
         self.window.toggle_fullscreen()
         self.full_screen.toggle_enabled()
@@ -76,6 +80,7 @@ class App:
         image = self.full_screen(image)
         image = self.part_screen(image)
         image = self.overlay_help_text(image)
+        image = self.group(image, str(image_source.path))  # GROUP
         key = self.window.display(image, title=image_source.path, wait_ms=0)
         self.keys.handle_keystroke(key)
 

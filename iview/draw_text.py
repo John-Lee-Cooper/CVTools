@@ -13,8 +13,8 @@ import PILasOPENCV
 from iview import color
 from iview.image_processor import ImageProcessor
 from iview.type_ext import Color, FilePath, Optional
-from iview.window import Window
 from iview.ui import error
+from iview.window import Window
 
 ImageFont = Image = ImageDraw = PILasOPENCV
 
@@ -84,34 +84,34 @@ class OverlayText(ImageProcessor):
 
         lines = self.text.split("\n")
         sizes = [ImageFont.getsize(line, self.font) for line in lines]
-        width = max([size[0] for size in sizes]) + 2 * self.pad
-        height = sum([size[1] + size[2] for size in sizes]) + 2 * self.pad
-        depth = 3
-
+        width = max(size[0] for size in sizes) + 2 * self.pad
+        height = sum(size[1] + size[2] for size in sizes) + 2 * self.pad
         h, w = image.shape[:2]
         height = min(h, height)
         width = min(w, width)
 
-        if self.h_pos == "l":
-            x = self.pad
-        elif self.h_pos == "c":
+        if self.h_pos == "c":
             x = max(0, (w - width) // 2)
+        elif self.h_pos == "l":
+            x = self.pad
         elif self.h_pos == "r":
             x = max(0, (w - width - 3 * self.pad))
         else:
             x = self.x
 
-        if self.v_pos == "t":
-            y = self.pad
+        if self.v_pos == "b":
+            y = max(0, (h - height - 3 * self.pad))
         elif self.v_pos == "c":
             y = max(0, (h - height) // 2)
-        elif self.v_pos == "b":
-            y = max(0, (h - height - 3 * self.pad))
+        elif self.v_pos == "t":
+            y = self.pad
         else:
             y = self.y
 
         if bg_color:
             sub = np.s_[y : y + height, x : x + width, :]
+            depth = 3
+
             overlay = np.full((height, width, depth), bg_color, dtype=np.uint8)
             image[sub] = cv.addWeighted(overlay, alpha, image[sub], 1 - alpha, 0)
 
@@ -136,7 +136,7 @@ class OverlayText(ImageProcessor):
             bg_color = self.bg_color
 
         if self.fg_color is None:
-            fg_color = tuple([0 if v > 128 else 255 for v in bg_color])
+            fg_color = tuple(0 if v > 128 else 255 for v in bg_color)
         else:
             fg_color = self.fg_color
 

@@ -4,14 +4,14 @@
 Command line interface to iview
 """
 
+import sys
 from pathlib import Path
 
-import sys
 import typer
 
+from iview.iview import App
 from iview.paths import script_name
 from iview.type_ext import List
-from iview.iview import App
 from lib.cli import run as typer_run
 from lib.util import update_docstring
 

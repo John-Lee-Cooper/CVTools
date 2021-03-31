@@ -23,6 +23,7 @@ class Group(ImageProcessor):
         super().__init__(True)
 
         self.path = path or config.FAVORITES_PATH
+        print(self.path)
         self.color = color
         self.size = size
 
@@ -50,7 +51,7 @@ class Group(ImageProcessor):
     def read(self) -> None:
         try:
             with open(self.path) as fp:
-                self._items = set(item.strip() for item in fp.readlines())
+                self._items = {item.strip() for item in fp.readlines()}
         except FileNotFoundError:
             pass
 

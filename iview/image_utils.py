@@ -25,7 +25,6 @@ else:
     # from pykeyboard import PyKeyboard
     from pymouse import PyMouse  # pylint: disable=import-outside-toplevel
 
-
     def screen_size() -> Tuple[int, int]:
 
         screen_w, screen_h = PyMouse().screen_size()
