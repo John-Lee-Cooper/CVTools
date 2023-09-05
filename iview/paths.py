@@ -10,7 +10,7 @@ from iview.type_ext import FilePath, List, Optional
 
 
 def script_name() -> str:
-    """ Return final path component of script without .py extension """
+    """Return final path component of script without .py extension"""
     return Path(argv[0]).stem
 
 

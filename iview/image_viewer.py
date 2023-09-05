@@ -21,10 +21,9 @@ from iview.window import Window
 
 
 class App:
-    """ TODO """
+    """TODO"""
 
     def __init__(self, paths: List[FilePath], subdirectories: bool = False):
-
         screen_w, screen_h = screen_size()
         self.image_source = ImageRing(paths, subdirectories)
         self.part_screen = FitCanvas(
@@ -57,12 +56,12 @@ class App:
         self.part_screen.toggle_enabled()
 
     def delete(self) -> None:
-        """ TODO """
+        """TODO"""
         trash(self.image_source.path)
         self.image_source.pop()
 
     def run(self) -> None:
-        """ TODO """
+        """TODO"""
         self.overlay_help_text.set_text(self.keys.help_string())
         with Window() as self.window:
             while True:

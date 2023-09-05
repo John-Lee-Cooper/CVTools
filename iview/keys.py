@@ -34,7 +34,6 @@ class KeyAssignment:
     max_width = 0
 
     def __init__(self, value: str, handler: Callable, description: str):
-
         if isinstance(value, type(0)):
             name = KEY_NAME.get(value)
         else:

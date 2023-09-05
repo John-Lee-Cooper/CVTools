@@ -20,19 +20,17 @@ if platform.system() == "Windows":
         screen_w, screen_h = user32.GetSystemMetrics(78), user32.GetSystemMetrics(79)
         return screen_w, screen_h
 
-
 else:
     # from pykeyboard import PyKeyboard
     from pymouse import PyMouse  # pylint: disable=import-outside-toplevel
 
     def screen_size() -> Tuple[int, int]:
-
         screen_w, screen_h = PyMouse().screen_size()
         return int(screen_w), int(screen_h)
 
 
 class FitCanvas(ImageProcessor):
-    """ Resize image to fit canvas without changing aspect ratio """
+    """Resize image to fit canvas without changing aspect ratio"""
 
     def __init__(
         self,

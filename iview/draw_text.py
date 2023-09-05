@@ -81,7 +81,6 @@ class OverlayText(ImageProcessor):
         alpha: float = 0.7,
         bg_color: Optional[Color] = None,
     ) -> None:
-
         lines = self.text.split("\n")
         sizes = [ImageFont.getsize(line, self.font) for line in lines]
         width = max(size[0] for size in sizes) + 2 * self.pad

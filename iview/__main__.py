@@ -9,7 +9,7 @@ from pathlib import Path
 
 import typer
 
-from iview.iview import App
+from iview.image_viewer import App
 from iview.paths import script_name
 from iview.type_ext import List
 from lib.cli import run as typer_run
@@ -69,7 +69,7 @@ def run(
 
 
 def main() -> None:
-    """Call the app command run """
+    """Call the app command run"""
 
     update_docstring(run, app=script_name())
     typer_run(run)

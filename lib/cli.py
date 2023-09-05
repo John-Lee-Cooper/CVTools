@@ -8,7 +8,7 @@ import typer
 
 
 def run(function: Callable[..., Any]) -> Any:
-    """ Run function as a typer command with no completion options """
+    """Run function as a typer command with no completion options"""
     app = typer.Typer(add_completion=False)
     command = app.command()
     command(function)

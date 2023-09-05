@@ -13,7 +13,6 @@ from lib.ring_buffer import RingBuffer
 
 class ImageRing:
     def __init__(self, paths: List[FilePath], subdirectories: bool = False):
-
         first_image = None
         image_paths_ = images_in_paths(paths, subdirectories)
         if len(image_paths_) == 1:

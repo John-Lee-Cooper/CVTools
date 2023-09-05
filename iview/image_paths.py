@@ -19,7 +19,7 @@ IMAGE_EXTS = (
 
 
 def is_image_path(path: PosixPath) -> bool:
-    """ Return if path is a valid path for an image"""
+    """Return if path is a valid path for an image"""
     return path.is_file() and path.suffix.lower() in IMAGE_EXTS
 
 

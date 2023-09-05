@@ -56,25 +56,25 @@ class RingBuffer:
         return self._list[self._index]
 
     def next_(self) -> Any:
-        """ Advance ringbuffer index forward """
+        """Advance ringbuffer index forward"""
         self._index = (self._index + 1) % len(self._list)
         return self._list[self._index]
 
     def prev_(self) -> Any:
-        """ Advance ringbuffer index backward """
+        """Advance ringbuffer index backward"""
         self._index = (self._index - 1) % len(self._list)
         return self._list[self._index]
 
     def forward(self) -> None:
-        """ Cause ringbuffer next call to __next__ to advance forward """
+        """Cause ringbuffer next call to __next__ to advance forward"""
         self._step = 1
 
     def backward(self) -> None:
-        """ Cause ringbuffer next call to __next__ to advance backward """
+        """Cause ringbuffer next call to __next__ to advance backward"""
         self._step = -1
 
     def stop(self) -> None:
-        """ Cause ringbuffer next call to __next__ to not advance """
+        """Cause ringbuffer next call to __next__ to not advance"""
         self._step = 0
 
     def pop(self) -> Any:
