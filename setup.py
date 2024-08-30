@@ -13,7 +13,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     keywords="open cv,click",
-    install_requires=['click==7.1.2', 'freetype-py==2.2.0', 'gif2numpy==1.3', 'kaitaistruct==0.9', 'mss==6.1.0', 'numpy2gif==1.0', 'numpy==1.19.4', 'opencv-python==4.4.0.46', 'pilasopencv==2.7', 'pyobjc-core==7.1', 'pyobjc-framework-cocoa==7.1', 'pyobjc-framework-quartz==7.1', 'pyuserinput==0.1.11', 'typer==0.3.2'],
+    install_requires=['click==7.1.2', 'freetype-py==2.2.0', 'gif2numpy==1.3', 'kaitaistruct==0.9', 'mss==6.1.0', 'numpy2gif==1.0', 'numpy==1.19.4', 'opencv-python==4.8.1.78', 'pilasopencv==2.7', 'pyobjc-core==7.1', 'pyobjc-framework-cocoa==7.1', 'pyobjc-framework-quartz==7.1', 'pyuserinput==0.1.11', 'typer==0.3.2'],
     # dependency_links="",
     packages=['lib', 'iview'],
     data_files=[('data/fonts', ['data/fonts/DroidSansMono.ttf'])],
